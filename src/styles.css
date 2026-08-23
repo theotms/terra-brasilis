@@ -16,6 +16,7 @@
   --lime: #b8cb65;
   --white: #fffdf8;
   --line: rgba(23, 50, 43, 0.18);
+  --line-light: rgba(247, 240, 229, 0.22);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --sans: 'Manrope', 'Segoe UI', sans-serif;
   --page-pad: clamp(1.25rem, 4vw, 4.5rem);
@@ -45,7 +46,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--paper);
+  background: var(--forest);
 }
 
 body.menu-is-open {
@@ -155,9 +156,9 @@ blockquote {
   position: sticky;
   z-index: 100;
   top: 0;
-  color: var(--forest-deep);
-  background: color-mix(in srgb, var(--cream) 94%, transparent);
-  border-bottom: 1px solid var(--line);
+  color: var(--cream);
+  background: color-mix(in srgb, var(--forest) 95%, transparent);
+  border-bottom: 1px solid var(--line-light);
   backdrop-filter: blur(16px);
 }
 
@@ -744,9 +745,9 @@ blockquote {
 
 .values-strip {
   display: grid;
-  color: var(--forest-deep);
-  background: var(--cream);
-  border-bottom: 1px solid var(--line);
+  color: var(--cream);
+  background: var(--forest);
+  border-bottom: 1px solid var(--line-light);
   grid-template-columns: repeat(4, 1fr);
 }
 
@@ -756,7 +757,7 @@ blockquote {
   padding: 1.6rem clamp(1rem, 2.5vw, 2.6rem);
   align-items: center;
   gap: 1rem;
-  border-right: 1px solid var(--line);
+  border-right: 1px solid var(--line-light);
 }
 
 .values-strip > div:last-child {
@@ -764,7 +765,7 @@ blockquote {
 }
 
 .values-strip span {
-  color: var(--coral-dark);
+  color: var(--gold);
   font-family: var(--serif);
   font-size: 1.15rem;
   font-style: italic;
@@ -785,6 +786,8 @@ blockquote {
   padding-bottom: var(--section-space);
   grid-template-columns: minmax(11rem, 0.65fr) minmax(20rem, 2fr);
   gap: clamp(2rem, 8vw, 8rem);
+  color: var(--cream);
+  background: var(--forest);
 }
 
 .manifesto__label {
@@ -810,7 +813,7 @@ blockquote {
 .manifesto__copy > p {
   max-width: 42rem;
   margin-bottom: 2.2rem;
-  color: var(--ink-muted);
+  color: rgba(247, 240, 229, 0.72);
   font-family: var(--serif);
   font-size: 1.35rem;
   line-height: 1.5;
@@ -819,7 +822,8 @@ blockquote {
 .collection {
   padding-top: var(--section-space);
   padding-bottom: var(--section-space);
-  background: var(--cream);
+  color: var(--cream);
+  background: var(--forest);
 }
 
 .section-heading {
@@ -843,7 +847,7 @@ blockquote {
 .section-heading > p {
   max-width: 31rem;
   margin: 0 0 0.5rem auto;
-  color: var(--ink-muted);
+  color: rgba(247, 240, 229, 0.7);
   font-size: 0.88rem;
   line-height: 1.7;
 }
@@ -863,9 +867,9 @@ blockquote {
 .collection-filters button {
   flex: 0 0 auto;
   padding: 0.7rem 1rem;
-  color: var(--ink);
+  color: var(--cream);
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-light);
   border-radius: 100vw;
   cursor: pointer;
   font-size: 0.65rem;
@@ -877,9 +881,9 @@ blockquote {
 
 .collection-filters button:hover,
 .collection-filters button.is-active {
-  color: var(--cream);
-  background: var(--forest);
-  border-color: var(--forest);
+  color: var(--forest-deep);
+  background: var(--gold);
+  border-color: var(--gold);
 }
 
 .product-grid {
@@ -970,7 +974,7 @@ blockquote {
 
 .product-card__info p {
   margin-bottom: 0.35rem;
-  color: var(--coral-dark);
+  color: var(--gold);
   font-size: 0.59rem;
   font-weight: 600;
   letter-spacing: 0.09em;
@@ -986,7 +990,7 @@ blockquote {
 }
 
 .product-card__info span {
-  color: var(--ink-muted);
+  color: rgba(247, 240, 229, 0.68);
   font-size: 0.72rem;
 }
 
@@ -997,17 +1001,17 @@ blockquote {
   flex: 0 0 auto;
   padding: 0;
   place-items: center;
-  color: var(--ink);
+  color: var(--cream);
   background: transparent;
-  border: 1px solid var(--line);
+  border: 1px solid var(--line-light);
   border-radius: 50%;
   cursor: pointer;
   transition: color 180ms ease, background 180ms ease, transform 180ms ease;
 }
 
 .round-arrow:hover {
-  color: var(--cream);
-  background: var(--forest);
+  color: var(--forest-deep);
+  background: var(--gold);
   transform: rotate(-8deg);
 }
 
@@ -1055,7 +1059,8 @@ blockquote {
   display: grid;
   min-height: 52rem;
   grid-template-columns: 1.02fr 0.98fr;
-  background: var(--paper);
+  color: var(--cream);
+  background: var(--forest);
 }
 
 .story__visual {
@@ -1093,7 +1098,7 @@ blockquote {
 }
 
 .story__content > .eyebrow {
-  color: var(--coral-dark);
+  color: var(--gold);
 }
 
 .story__content h2,
@@ -1109,13 +1114,13 @@ blockquote {
 
 .story__content > p:not(.eyebrow) {
   max-width: 39rem;
-  color: var(--ink-muted);
+  color: rgba(247, 240, 229, 0.72);
   font-size: 0.91rem;
   line-height: 1.8;
 }
 
 .story__content .story__lead {
-  color: var(--ink);
+  color: var(--cream);
   font-family: var(--serif);
   font-size: 1.38rem;
   line-height: 1.5;
@@ -1125,16 +1130,27 @@ blockquote {
   display: flex;
   margin: 1.5rem 0 2rem;
   flex-direction: column;
-  color: var(--forest-soft);
+  color: var(--gold-soft);
   font-family: var(--serif);
   font-size: 1.25rem;
   font-style: italic;
 }
 
 .story__signature strong {
-  color: var(--coral-dark);
+  color: var(--coral);
   font-size: 2rem;
   font-weight: 500;
+}
+
+.story .button--outline {
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+.story .button--outline:hover {
+  color: var(--forest-deep);
+  background: var(--gold);
+  border-color: var(--gold);
 }
 
 .makers {
@@ -1247,7 +1263,8 @@ blockquote {
 .instagram-section {
   padding-top: var(--section-space);
   padding-bottom: var(--section-space);
-  background: var(--paper);
+  color: var(--cream);
+  background: var(--forest);
 }
 
 .instagram-section__heading {
@@ -1689,7 +1706,7 @@ blockquote {
   }
 
   .values-strip > div:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid var(--line-light);
   }
 
   .manifesto {

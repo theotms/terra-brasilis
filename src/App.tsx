@@ -78,7 +78,7 @@ function App() {
           </nav>
 
           <a className="site-header__brand" href="#top" aria-label="Terra Brasilis home">
-            <Brand compact />
+            <Brand compact inverse />
           </a>
 
           <div className="site-header__actions">
