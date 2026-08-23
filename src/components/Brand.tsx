@@ -43,7 +43,9 @@ export function Brand({ inverse = false, compact = false }: BrandProps) {
   return (
     <span
       className={`brand${inverse ? ' brand--inverse' : ''}${compact ? ' brand--compact' : ''}`}
-      aria-label="Terra Brasilis"
+      aria-label={
+        compact ? 'Terra Brasilis' : 'Terra Brasilis handcrafted jewelry'
+      }
     >
       <BrandMark inverse={inverse} />
       <span className="brand__words">

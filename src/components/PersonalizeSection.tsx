@@ -22,6 +22,7 @@ type PersonalizeSectionProps = {
   onSelectedReferencesChange: (references: string[]) => void
   selectionNotice: string
   onSelectionNoticeChange: (notice: string) => void
+  headingLevel?: 'h1' | 'h2'
 }
 
 type RequestDetails = {
@@ -98,6 +99,7 @@ export function PersonalizeSection({
   onSelectedReferencesChange,
   selectionNotice,
   onSelectionNoticeChange,
+  headingLevel = 'h2',
 }: PersonalizeSectionProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [details, setDetails] = useState<RequestDetails>(initialDetails)
@@ -148,6 +150,8 @@ export function PersonalizeSection({
   }, [details, selectedProducts])
 
   const maximumSelected = selectedReferences.length >= 3
+  const Heading = headingLevel
+  const StepHeading = headingLevel === 'h1' ? 'h2' : 'h3'
 
   function toggleReference(productId: string) {
     if (selectedReferences.includes(productId)) {
@@ -215,9 +219,9 @@ export function PersonalizeSection({
         <header className="personalize-intro reveal">
           <div className="personalize-intro__copy">
             <p className="eyebrow">Made for your story</p>
-            <h2 id="personalize-title">
+            <Heading id="personalize-title">
               Your idea, made <em>by hand.</em>
-            </h2>
+            </Heading>
             <p>
               Imagine a name anklet, a wedding palette, a Halloween piece, or
               something completely your own. Choose what inspires you and tell
@@ -246,7 +250,7 @@ export function PersonalizeSection({
               <span>01</span>
               <div>
                 <p className="eyebrow">Start with the piece</p>
-                <h3>What would you like us to make?</h3>
+                <StepHeading>What would you like us to make?</StepHeading>
               </div>
               <p>Choose one</p>
             </div>
@@ -295,7 +299,7 @@ export function PersonalizeSection({
               <span>02</span>
               <div>
                 <p className="eyebrow">Find your direction</p>
-                <h3>Choose up to three models you like.</h3>
+                <StepHeading>Choose up to three models you like.</StepHeading>
               </div>
               <p
                 className={maximumSelected ? 'is-complete' : ''}
@@ -377,7 +381,7 @@ export function PersonalizeSection({
               <span>03</span>
               <div>
                 <p className="eyebrow">Make it meaningful</p>
-                <h3>What should your piece feel like?</h3>
+                <StepHeading>What should your piece feel like?</StepHeading>
               </div>
               <p>Choose any that fit</p>
             </div>

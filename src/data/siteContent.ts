@@ -33,11 +33,11 @@ export const siteConfig = {
 }
 
 export const navItems = [
-  { label: 'Collection', href: '#collection' },
-  { label: 'Our story', href: '#story' },
-  { label: 'The makers', href: '#makers' },
-  { label: 'Personalize', href: '#personalize' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Collection', href: '/collection/' },
+  { label: 'Our story', href: '/story/' },
+  { label: 'The makers', href: '/makers/' },
+  { label: 'Personalize', href: '/personalize/' },
+  { label: 'Contact', href: '/#contact' },
 ]
 
 // These are sample catalog entries. Replace their names and details with the

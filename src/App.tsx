@@ -90,7 +90,7 @@ function App() {
             ))}
           </nav>
 
-          <a className="site-header__brand" href="#top" aria-label="Terra Brasilis home">
+          <a className="site-header__brand" href="/" aria-label="Terra Brasilis home">
             <Brand compact inverse />
           </a>
 
@@ -156,18 +156,18 @@ function App() {
                 the joy of our Brazilian roots.
               </p>
               <div className="hero__buttons">
-                <a className="button button--light" href="#collection">
+                <a className="button button--light" href="/collection/">
                   Explore the collection
                   <ArrowRight aria-hidden="true" />
                 </a>
                 <a
                   className="button button--hero-personalize"
-                  href="#personalize"
+                  href="/personalize/"
                 >
                   Personalize a piece
                   <Sparkles aria-hidden="true" />
                 </a>
-                <a className="text-link text-link--light" href="#story">
+                <a className="text-link text-link--light" href="/story/">
                   Meet the family
                 </a>
               </div>
@@ -227,7 +227,7 @@ function App() {
               We mix vibrant color, thoughtful detail, and the warmth of
               handmade work to create pieces that feel joyful and personal.
             </p>
-            <a className="text-link" href="#story">
+            <a className="text-link" href="/story/">
               Discover our story
               <ArrowRight aria-hidden="true" />
             </a>
@@ -292,31 +292,7 @@ function App() {
                     <div className="product-card__actions">
                       <a
                         className="product-card__personalize"
-                        href="#personalize"
-                        onClick={() => {
-                          if (personalizationReferences.includes(product.id)) {
-                            setPersonalizationNotice(
-                              `${product.name} is already one of your inspirations.`,
-                            )
-                            return
-                          }
-
-                          if (personalizationReferences.length >= 3) {
-                            setPersonalizationNotice(
-                              'You already chose three models. Remove one before choosing another.',
-                            )
-                            return
-                          }
-
-                          const nextReferences = [
-                            ...personalizationReferences,
-                            product.id,
-                          ]
-                          setPersonalizationReferences(nextReferences)
-                          setPersonalizationNotice(
-                            `${product.name} added — ${nextReferences.length} of 3 models selected.`,
-                          )
-                        }}
+                        href={`/personalize/?references=${encodeURIComponent(product.id)}`}
                         aria-label={`Use as inspiration: ${product.name}`}
                       >
                         <Sparkles aria-hidden="true" />
@@ -423,7 +399,7 @@ function App() {
 
               <a
                 className="button button--coral makers__personalize"
-                href="#personalize"
+                href="/personalize/"
               >
                 Personalize a piece
                 <Sparkles aria-hidden="true" />
@@ -506,7 +482,7 @@ function App() {
                 </a>
                 <a
                   className="button button--outline contact__personalize"
-                  href="#personalize"
+                  href="/personalize/"
                 >
                   Request a personalized piece
                   <Sparkles aria-hidden="true" />

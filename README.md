@@ -13,6 +13,19 @@ can choose a piece type, select up to three catalog models as inspiration, add
 a name, colors, theme, date, and notes, then copy the generated request and
 continue the conversation through Instagram or WhatsApp.
 
+## Site structure
+
+The project is a Vite multi-page site. The homepage remains the complete brand
+introduction, while the primary navigation also opens four focused pages:
+
+- `/collection/` — the complete filterable catalog
+- `/story/` — the family and brand story
+- `/makers/` — the handmade process and makers
+- `/personalize/` — the complete personalized-jewelry request builder
+
+Each route has its own HTML document, title, description, and direct URL, so it
+can be opened or refreshed independently.
+
 ## Run locally
 
 ```bash
