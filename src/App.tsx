@@ -12,6 +12,7 @@ import {
 import { Brand } from './components/Brand'
 import { InstagramIcon } from './components/InstagramIcon'
 import { InquiryDialog } from './components/InquiryDialog'
+import { PersonalizeSection } from './components/PersonalizeSection'
 import { PhotoFrame } from './components/PhotoFrame'
 import {
   contactChannel,
@@ -36,6 +37,10 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [activeCategory, setActiveCategory] = useState<Category>('All')
   const [inquiryPiece, setInquiryPiece] = useState<string | null>(null)
+  const [personalizationReferences, setPersonalizationReferences] = useState<
+    string[]
+  >([])
+  const [personalizationNotice, setPersonalizationNotice] = useState('')
 
   const visibleProducts = useMemo(
     () =>
@@ -49,9 +54,17 @@ function App() {
     const targetId = window.location.hash.slice(1)
     if (!targetId) return
 
-    window.requestAnimationFrame(() => {
-      document.getElementById(targetId)?.scrollIntoView()
+    let cancelled = false
+
+    document.fonts.ready.then(() => {
+      window.requestAnimationFrame(() => {
+        if (!cancelled) document.getElementById(targetId)?.scrollIntoView()
+      })
     })
+
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   useEffect(() => {
@@ -70,7 +83,7 @@ function App() {
       <header className="site-header">
         <div className="site-header__inner">
           <nav className="desktop-nav" aria-label="Primary navigation">
-            {navItems.slice(0, 3).map((item) => (
+            {navItems.slice(0, 4).map((item) => (
               <a key={item.href} href={item.href}>
                 {item.label}
               </a>
@@ -146,6 +159,13 @@ function App() {
                 <a className="button button--light" href="#collection">
                   Explore the collection
                   <ArrowRight aria-hidden="true" />
+                </a>
+                <a
+                  className="button button--hero-personalize"
+                  href="#personalize"
+                >
+                  Personalize a piece
+                  <Sparkles aria-hidden="true" />
                 </a>
                 <a className="text-link text-link--light" href="#story">
                   Meet the family
@@ -269,14 +289,48 @@ function App() {
                       <h3>{product.name}</h3>
                       <span>{product.detail}</span>
                     </div>
-                    <button
-                      className="round-arrow"
-                      type="button"
-                      onClick={() => setInquiryPiece(product.name)}
-                      aria-label={`Inquire about ${product.name}`}
-                    >
-                      <ArrowDownRight aria-hidden="true" />
-                    </button>
+                    <div className="product-card__actions">
+                      <a
+                        className="product-card__personalize"
+                        href="#personalize"
+                        onClick={() => {
+                          if (personalizationReferences.includes(product.id)) {
+                            setPersonalizationNotice(
+                              `${product.name} is already one of your inspirations.`,
+                            )
+                            return
+                          }
+
+                          if (personalizationReferences.length >= 3) {
+                            setPersonalizationNotice(
+                              'You already chose three models. Remove one before choosing another.',
+                            )
+                            return
+                          }
+
+                          const nextReferences = [
+                            ...personalizationReferences,
+                            product.id,
+                          ]
+                          setPersonalizationReferences(nextReferences)
+                          setPersonalizationNotice(
+                            `${product.name} added — ${nextReferences.length} of 3 models selected.`,
+                          )
+                        }}
+                        aria-label={`Use as inspiration: ${product.name}`}
+                      >
+                        <Sparkles aria-hidden="true" />
+                        Use as inspiration
+                      </a>
+                      <button
+                        className="round-arrow"
+                        type="button"
+                        onClick={() => setInquiryPiece(product.name)}
+                        aria-label={`Inquire about ${product.name}`}
+                      >
+                        <ArrowDownRight aria-hidden="true" />
+                      </button>
+                    </div>
                   </div>
                 </article>
               ))}
@@ -366,6 +420,14 @@ function App() {
                   </div>
                 </li>
               </ol>
+
+              <a
+                className="button button--coral makers__personalize"
+                href="#personalize"
+              >
+                Personalize a piece
+                <Sparkles aria-hidden="true" />
+              </a>
             </div>
 
             <div className="makers__photos reveal">
@@ -375,6 +437,13 @@ function App() {
             </div>
           </div>
         </section>
+
+        <PersonalizeSection
+          selectedReferences={personalizationReferences}
+          onSelectedReferencesChange={setPersonalizationReferences}
+          selectionNotice={personalizationNotice}
+          onSelectionNoticeChange={setPersonalizationNotice}
+        />
 
         <section className="instagram-section" aria-labelledby="instagram-title">
           <div className="section-shell">
@@ -421,19 +490,28 @@ function App() {
                 caught your eye and we&apos;ll help with availability, price, and
                 purchase details.
               </p>
-              <a
-                className="button button--coral"
-                href={contactHref()}
-                target="_blank"
-                rel="noreferrer"
-              >
-                {contactChannel === 'WhatsApp' ? (
-                  <MessageCircle aria-hidden="true" />
-                ) : (
-                  <InstagramIcon />
-                )}
-                Message us on {contactChannel}
-              </a>
+              <div className="contact__actions">
+                <a
+                  className="button button--coral"
+                  href={contactHref()}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {contactChannel === 'WhatsApp' ? (
+                    <MessageCircle aria-hidden="true" />
+                  ) : (
+                    <InstagramIcon />
+                  )}
+                  Message us on {contactChannel}
+                </a>
+                <a
+                  className="button button--outline contact__personalize"
+                  href="#personalize"
+                >
+                  Request a personalized piece
+                  <Sparkles aria-hidden="true" />
+                </a>
+              </div>
             </div>
 
             <div className="order-card">

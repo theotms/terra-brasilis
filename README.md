@@ -8,6 +8,11 @@ the brand a polished home, tells the founders' story, and lets a customer ask
 about a specific piece without requiring inventory, payments, taxes, or a
 custom checkout system yet.
 
+The homepage also includes a personalized-jewelry request builder. Customers
+can choose a piece type, select up to three catalog models as inspiration, add
+a name, colors, theme, date, and notes, then copy the generated request and
+continue the conversation through Instagram or WhatsApp.
+
 ## Run locally
 
 ```bash

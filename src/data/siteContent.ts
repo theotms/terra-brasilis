@@ -36,6 +36,7 @@ export const navItems = [
   { label: 'Collection', href: '#collection' },
   { label: 'Our story', href: '#story' },
   { label: 'The makers', href: '#makers' },
+  { label: 'Personalize', href: '#personalize' },
   { label: 'Contact', href: '#contact' },
 ]
 
@@ -174,11 +175,15 @@ export function inquiryMessage(piece?: string) {
 }
 
 export function contactHref(piece?: string) {
-  const message = encodeURIComponent(inquiryMessage(piece))
+  return messageContactHref(inquiryMessage(piece))
+}
+
+export function messageContactHref(message: string) {
+  const encodedMessage = encodeURIComponent(message)
   const number = siteConfig.whatsappNumber.replace(/\D/g, '')
 
   if (number) {
-    return `https://wa.me/${number}?text=${message}`
+    return `https://wa.me/${number}?text=${encodedMessage}`
   }
 
   return siteConfig.instagramUrl
