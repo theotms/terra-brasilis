@@ -10,5 +10,6 @@ export default defineConfig({
     story: 'story/index.html',
     makers: 'makers/index.html',
     personalize: 'personalize/index.html',
+    contact: 'contact/index.html',
   },
 })

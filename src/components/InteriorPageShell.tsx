@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { ArrowDownRight, ArrowRight, Menu, Sparkles, X } from 'lucide-react'
+import { ArrowDownRight, ArrowRight, Menu, X } from 'lucide-react'
 import { contactHref, siteConfig } from '../data/siteContent'
+import { AnnouncementBar } from './AnnouncementBar'
 import { Brand } from './Brand'
 import { InstagramIcon } from './InstagramIcon'
 
@@ -9,6 +10,7 @@ export type InteriorPageId =
   | 'story'
   | 'makers'
   | 'personalize'
+  | 'contact'
 
 type InteriorPageShellProps = {
   activePage: InteriorPageId
@@ -63,11 +65,7 @@ export function InteriorPageShell({
         Skip to main content
       </a>
 
-      <div className="announcement" role="note">
-        <span>Brazilian soul</span>
-        <Sparkles size={14} aria-hidden="true" />
-        <span>Handmade in Terre Haute</span>
-      </div>
+      <AnnouncementBar />
 
       <header className="site-header">
         <div className="site-header__inner">
@@ -92,7 +90,11 @@ export function InteriorPageShell({
           </a>
 
           <div className="site-header__actions">
-            <a className="header-contact" href="/#contact">
+            <a
+              className="header-contact"
+              href="/contact/"
+              aria-current={activePage === 'contact' ? 'page' : undefined}
+            >
               Let&apos;s talk
               <ArrowDownRight size={17} aria-hidden="true" />
             </a>
@@ -129,7 +131,11 @@ export function InteriorPageShell({
                 <ArrowRight aria-hidden="true" />
               </a>
             ))}
-            <a href="/#contact" onClick={closeMenu}>
+            <a
+              href="/contact/"
+              aria-current={activePage === 'contact' ? 'page' : undefined}
+              onClick={closeMenu}
+            >
               <span>05</span>
               Contact
               <ArrowRight aria-hidden="true" />
@@ -178,7 +184,12 @@ export function InteriorPageShell({
                   {item.label}
                 </a>
               ))}
-              <a href="/#contact">Contact</a>
+              <a
+                href="/contact/"
+                aria-current={activePage === 'contact' ? 'page' : undefined}
+              >
+                Contact
+              </a>
             </div>
             <div>
               <p className="eyebrow">Connect</p>

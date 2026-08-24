@@ -10,6 +10,7 @@ import {
   X,
 } from 'lucide-react'
 import { Brand } from './components/Brand'
+import { AnnouncementBar } from './components/AnnouncementBar'
 import { InstagramIcon } from './components/InstagramIcon'
 import { InquiryDialog } from './components/InquiryDialog'
 import { PersonalizeSection } from './components/PersonalizeSection'
@@ -74,11 +75,7 @@ function App() {
 
   return (
     <>
-      <div className="announcement" role="note">
-        <span>Brazilian soul</span>
-        <Sparkles size={14} aria-hidden="true" />
-        <span>Handmade in Terre Haute</span>
-      </div>
+      <AnnouncementBar />
 
       <header className="site-header">
         <div className="site-header__inner">
@@ -95,7 +92,7 @@ function App() {
           </a>
 
           <div className="site-header__actions">
-            <a className="header-contact" href="#contact">
+            <a className="header-contact" href="/contact/">
               Let&apos;s talk
               <ArrowDownRight size={17} aria-hidden="true" />
             </a>

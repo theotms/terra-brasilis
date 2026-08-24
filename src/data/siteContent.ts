@@ -25,7 +25,7 @@ export type Product = {
 export const siteConfig = {
   instagramHandle: '@terra_brasilis.jewlery',
   instagramUrl: 'https://www.instagram.com/terra_brasilis.jewlery/',
-  location: 'Terre Haute, Indiana',
+  location: 'Terre Haute, Indiana, USA',
 
   // Add digits only, including country code, to open the Terra Brasilis chat
   // directly. While blank, WhatsApp opens with the message ready to share.
@@ -38,7 +38,7 @@ export const navItems = [
   { label: 'Our story', href: '/story/' },
   { label: 'The makers', href: '/makers/' },
   { label: 'Personalize', href: '/personalize/' },
-  { label: 'Contact', href: '/#contact' },
+  { label: 'Contact', href: '/contact/' },
 ]
 
 // These are sample catalog entries. Replace their names and details with the

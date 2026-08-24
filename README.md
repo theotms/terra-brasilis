@@ -11,17 +11,18 @@ custom checkout system yet.
 The homepage also includes a personalized-jewelry request builder. Customers
 can choose a piece type, select up to three catalog models as inspiration, add
 a name, colors, theme, date, and notes, then copy the generated request and
-continue the conversation through Instagram or WhatsApp.
+continue the conversation through WhatsApp.
 
 ## Site structure
 
 The project is a Vite multi-page site. The homepage remains the complete brand
-introduction, while the primary navigation also opens four focused pages:
+introduction, while the primary navigation also opens five focused pages:
 
 - `/collection/` — the complete filterable catalog
 - `/story/` — the family and brand story
 - `/makers/` — the handmade process and makers
 - `/personalize/` — the complete personalized-jewelry request builder
+- `/contact/` — Instagram, WhatsApp, and local contact information
 
 Each route has its own HTML document, title, description, and direct URL, so it
 can be opened or refreshed independently.
@@ -80,7 +81,7 @@ colorful, labeled placeholder in the final photo's position.
 
 ## Suggested launch path
 
-1. Launch this catalog with Instagram or WhatsApp ordering.
+1. Launch this catalog with WhatsApp ordering.
 2. Add real product data and consistent photography.
 3. Track how many inquiries turn into purchases and what questions customers
    ask most often.
