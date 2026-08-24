@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, Copy, MessageCircle, X } from 'lucide-react'
-import { InstagramIcon } from './InstagramIcon'
 import {
   contactChannel,
   contactHref,
@@ -74,18 +73,9 @@ export function InquiryDialog({ piece, onClose }: InquiryDialogProps) {
         target="_blank"
         rel="noreferrer"
       >
-        {contactChannel === 'WhatsApp' ? (
-          <MessageCircle aria-hidden="true" />
-        ) : (
-          <InstagramIcon />
-        )}
+        <MessageCircle aria-hidden="true" />
         Continue on {contactChannel}
       </a>
-      {contactChannel === 'Instagram' && (
-        <p className="inquiry-dialog__hint">
-          Tip: copy the note first, then paste it into your Instagram message.
-        </p>
-      )}
     </dialog>
   )
 }

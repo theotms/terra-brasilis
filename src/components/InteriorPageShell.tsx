@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { ArrowDownRight, ArrowRight, Menu, Sparkles, X } from 'lucide-react'
-import { siteConfig } from '../data/siteContent'
+import { contactHref, siteConfig } from '../data/siteContent'
 import { Brand } from './Brand'
 import { InstagramIcon } from './InstagramIcon'
 
@@ -182,6 +182,9 @@ export function InteriorPageShell({
             </div>
             <div>
               <p className="eyebrow">Connect</p>
+              <a href={contactHref()} target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
               <a
                 href={siteConfig.instagramUrl}
                 target="_blank"

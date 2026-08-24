@@ -462,7 +462,7 @@ function App() {
               <p className="eyebrow">See it. Love it. Message us.</p>
               <h2 id="contact-title">Your next favorite piece starts with hello.</h2>
               <p>
-                We currently take orders through direct message. Tell us what
+                We currently take orders through WhatsApp. Tell us what
                 caught your eye and we&apos;ll help with availability, price, and
                 purchase details.
               </p>
@@ -473,11 +473,7 @@ function App() {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  {contactChannel === 'WhatsApp' ? (
-                    <MessageCircle aria-hidden="true" />
-                  ) : (
-                    <InstagramIcon />
-                  )}
+                  <MessageCircle aria-hidden="true" />
                   Message us on {contactChannel}
                 </a>
                 <a
@@ -539,6 +535,9 @@ function App() {
             </div>
             <div>
               <p className="eyebrow">Connect</p>
+              <a href={contactHref()} target="_blank" rel="noreferrer">
+                WhatsApp
+              </a>
               <a href={siteConfig.instagramUrl} target="_blank" rel="noreferrer">
                 Instagram
               </a>
@@ -559,11 +558,7 @@ function App() {
         rel="noreferrer"
         aria-label={`Let's talk — message Terra Brasilis on ${contactChannel}`}
       >
-        {contactChannel === 'WhatsApp' ? (
-          <MessageCircle aria-hidden="true" />
-        ) : (
-          <InstagramIcon />
-        )}
+        <MessageCircle aria-hidden="true" />
         <span>Let&apos;s talk</span>
       </a>
 

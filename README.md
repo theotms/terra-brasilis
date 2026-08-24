@@ -58,19 +58,19 @@ The sample catalog entries are placeholders based on product types currently
 shown publicly by Terra Brasilis. Confirm all final names, availability,
 materials, prices, and policies with the owners before publishing.
 
-## Turn on WhatsApp ordering
+## WhatsApp ordering
 
-The live fallback is currently Instagram because no WhatsApp number has been
-provided. In `src/data/siteContent.ts`, set `whatsappNumber` to digits only,
-including the country code:
+Every product inquiry and contact button opens WhatsApp with a prewritten
+message. To send visitors straight to the Terra Brasilis chat, set
+`whatsappNumber` in `src/data/siteContent.ts` to digits only, including the
+country code:
 
 ```ts
 whatsappNumber: '18125551234',
 ```
 
-Once that value is present, every product inquiry and contact button switches
-to WhatsApp automatically and includes a prewritten message with the product
-name.
+Until that value is present, WhatsApp opens the prepared message and asks the
+visitor to choose a recipient.
 
 ## Add real photos
 

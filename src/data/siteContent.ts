@@ -27,8 +27,9 @@ export const siteConfig = {
   instagramUrl: 'https://www.instagram.com/terra_brasilis.jewlery/',
   location: 'Terre Haute, Indiana',
 
-  // Add digits only, including country code, to turn every inquiry into a
-  // pre-filled WhatsApp message. Example: '18125551234'.
+  // Add digits only, including country code, to open the Terra Brasilis chat
+  // directly. While blank, WhatsApp opens with the message ready to share.
+  // Example: '18125551234'.
   whatsappNumber: '',
 }
 
@@ -186,9 +187,7 @@ export function messageContactHref(message: string) {
     return `https://wa.me/${number}?text=${encodedMessage}`
   }
 
-  return siteConfig.instagramUrl
+  return `https://wa.me/?text=${encodedMessage}`
 }
 
-export const contactChannel = siteConfig.whatsappNumber
-  ? 'WhatsApp'
-  : 'Instagram'
+export const contactChannel = 'WhatsApp'

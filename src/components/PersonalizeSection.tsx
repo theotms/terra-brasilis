@@ -12,9 +12,7 @@ import {
   contactChannel,
   messageContactHref,
   products,
-  siteConfig,
 } from '../data/siteContent'
-import { InstagramIcon } from './InstagramIcon'
 import { PhotoFrame } from './PhotoFrame'
 
 type PersonalizeSectionProps = {
@@ -33,7 +31,7 @@ type RequestDetails = {
   occasionDate: string
   notes: string
   customerName: string
-  instagramHandle: string
+  whatsappNumber: string
 }
 
 const pieceTypes = [
@@ -70,6 +68,8 @@ const themeOptions = [
   'Halloween',
   'Birthday or celebration',
   'Brazilian-inspired',
+  'American colors',
+  'Summer vibes',
   'Something else',
 ]
 
@@ -81,7 +81,7 @@ const initialDetails: RequestDetails = {
   occasionDate: '',
   notes: '',
   customerName: '',
-  instagramHandle: '',
+  whatsappNumber: '',
 }
 
 function formatDate(value: string) {
@@ -137,8 +137,8 @@ export function PersonalizeSection({
       details.occasionDate
         ? `Needed around: ${formatDate(details.occasionDate)}`
         : 'Needed around: No specific date',
-      details.instagramHandle
-        ? `My Instagram: ${details.instagramHandle}`
+      details.whatsappNumber
+        ? `My WhatsApp number: ${details.whatsappNumber}`
         : '',
       '',
       `My idea: ${details.notes}`,
@@ -476,18 +476,19 @@ export function PersonalizeSection({
               </label>
 
               <label>
-                <span>Instagram handle <small>Optional</small></span>
+                <span>WhatsApp number <small>Optional</small></span>
                 <input
-                  type="text"
-                  value={details.instagramHandle}
+                  type="tel"
+                  value={details.whatsappNumber}
                   onChange={(event) =>
                     setDetails((current) => ({
                       ...current,
-                      instagramHandle: event.target.value,
+                      whatsappNumber: event.target.value,
                     }))
                   }
-                  placeholder="@yourname"
-                  maxLength={40}
+                  placeholder="For example: +1 812 555 1234"
+                  autoComplete="tel"
+                  maxLength={24}
                 />
               </label>
 
@@ -585,11 +586,7 @@ export function PersonalizeSection({
             target="_blank"
             rel="noreferrer"
           >
-            {contactChannel === 'WhatsApp' ? (
-              <MessageCircle aria-hidden="true" />
-            ) : (
-              <InstagramIcon />
-            )}
+            <MessageCircle aria-hidden="true" />
             Open {contactChannel}
           </a>
         </div>
@@ -597,9 +594,6 @@ export function PersonalizeSection({
           {copyStatus === 'copied' && 'Copied — now paste it into your message.'}
           {copyStatus === 'error' &&
             'Copy was blocked by your browser. Select the message above and copy it manually.'}
-          {copyStatus === 'idle' &&
-            contactChannel === 'Instagram' &&
-            `Instagram cannot fill the message automatically, so copy it before opening ${siteConfig.instagramHandle}.`}
         </p>
         <p className="personalize-review__fine-print">
           This request is not a confirmed order. Terra Brasilis will confirm
