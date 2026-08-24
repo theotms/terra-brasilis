@@ -26,7 +26,7 @@ type PersonalizeSectionProps = {
 }
 
 type RequestDetails = {
-  pieceType: string
+  pieceTypes: string[]
   themes: string[]
   nameOrWord: string
   colors: string
@@ -74,7 +74,7 @@ const themeOptions = [
 ]
 
 const initialDetails: RequestDetails = {
-  pieceType: '',
+  pieceTypes: [],
   themes: [],
   nameOrWord: '',
   colors: '',
@@ -122,10 +122,10 @@ export function PersonalizeSection({
       : 'Open to your ideas'
 
     return [
-      'Hi Terra Brasilis! I would love to request a personalized piece.',
+      'Hi Terra Brasilis! I would love to request personalized jewelry.',
       '',
       `My name: ${details.customerName}`,
-      `Piece: ${details.pieceType}`,
+      `${details.pieceTypes.length > 1 ? 'Pieces' : 'Piece'}: ${details.pieceTypes.join(', ')}`,
       `Inspiration models: ${inspiration}`,
       `Theme or occasion: ${themes}`,
       details.nameOrWord
@@ -189,6 +189,30 @@ export function PersonalizeSection({
     }))
   }
 
+  function togglePieceType(pieceType: string) {
+    setDetails((current) => {
+      if (pieceType === 'Not sure yet') {
+        return {
+          ...current,
+          pieceTypes: current.pieceTypes.includes(pieceType)
+            ? []
+            : [pieceType],
+        }
+      }
+
+      const currentChoices = current.pieceTypes.filter(
+        (item) => item !== 'Not sure yet',
+      )
+
+      return {
+        ...current,
+        pieceTypes: currentChoices.includes(pieceType)
+          ? currentChoices.filter((item) => item !== pieceType)
+          : [...currentChoices, pieceType],
+      }
+    })
+  }
+
   function openReview(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setCopyStatus('idle')
@@ -232,7 +256,7 @@ export function PersonalizeSection({
           <div className="personalize-intro__guide">
             <p className="eyebrow">How it works</p>
             <ol>
-              <li><span>01</span>Choose a jewelry type</li>
+              <li><span>01</span>Choose one or more jewelry types</li>
               <li><span>02</span>Pick up to three inspirations</li>
               <li><span>03</span>Share the details that matter</li>
             </ol>
@@ -245,36 +269,35 @@ export function PersonalizeSection({
 
         <form className="personalize-form reveal" onSubmit={openReview}>
           <fieldset className="request-step">
-            <legend className="visually-hidden">Choose a jewelry type</legend>
+            <legend className="visually-hidden">
+              Choose one or more jewelry types
+            </legend>
             <div className="request-step__heading">
               <span>01</span>
               <div>
                 <p className="eyebrow">Start with the piece</p>
                 <StepHeading>What would you like us to make?</StepHeading>
               </div>
-              <p>Choose one</p>
+              <p>Choose one or more</p>
             </div>
 
             <div className="piece-choice-grid">
               {pieceTypes.map((piece) => (
                 <label
                   className={`piece-choice${
-                    details.pieceType === piece.value ? ' is-selected' : ''
+                    details.pieceTypes.includes(piece.value)
+                      ? ' is-selected'
+                      : ''
                   }`}
                   key={piece.value}
                 >
                   <input
-                    type="radio"
-                    name="piece-type"
+                    type="checkbox"
+                    name="piece-types"
                     value={piece.value}
-                    checked={details.pieceType === piece.value}
-                    onChange={() =>
-                      setDetails((current) => ({
-                        ...current,
-                        pieceType: piece.value,
-                      }))
-                    }
-                    required
+                    checked={details.pieceTypes.includes(piece.value)}
+                    onChange={() => togglePieceType(piece.value)}
+                    required={details.pieceTypes.length === 0}
                   />
                   <span className="piece-choice__icon" aria-hidden="true">
                     <Heart />
