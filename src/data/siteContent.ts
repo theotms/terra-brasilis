@@ -25,6 +25,7 @@ export type Product = {
 export const siteConfig = {
   instagramHandle: '@terra_brasilis.jewlery',
   instagramUrl: 'https://www.instagram.com/terra_brasilis.jewlery/',
+  instagramMessageUrl: 'https://ig.me/m/terra_brasilis.jewlery',
   location: 'Terre Haute, Indiana, USA',
 
   // Add digits only, including country code, to open the Terra Brasilis chat
@@ -189,5 +190,3 @@ export function messageContactHref(message: string) {
 
   return `https://wa.me/?text=${encodedMessage}`
 }
-
-export const contactChannel = 'WhatsApp'

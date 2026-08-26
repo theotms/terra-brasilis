@@ -3,7 +3,7 @@ import { ArrowRight, MessageCircle, Sparkles } from 'lucide-react'
 import { InquiryDialog } from '../components/InquiryDialog'
 import { InteriorPageShell } from '../components/InteriorPageShell'
 import { PhotoFrame } from '../components/PhotoFrame'
-import { contactChannel, products } from '../data/siteContent'
+import { products } from '../data/siteContent'
 
 const categories = [
   'All',
@@ -40,8 +40,9 @@ export function CollectionPage() {
             </p>
           </div>
           <p className="page-hero__note">
-            Every piece is made in small quantities. Ask us on {contactChannel}
-            for availability, pricing, and purchase details.
+            Every piece is made in small quantities. Message us on Instagram
+            first, or use WhatsApp for availability, pricing, and purchase
+            details.
           </p>
         </div>
       </header>

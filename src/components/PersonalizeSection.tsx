@@ -9,10 +9,11 @@ import {
   X,
 } from 'lucide-react'
 import {
-  contactChannel,
   messageContactHref,
   products,
+  siteConfig,
 } from '../data/siteContent'
+import { InstagramIcon } from './InstagramIcon'
 import { PhotoFrame } from './PhotoFrame'
 
 type PersonalizeSectionProps = {
@@ -565,14 +566,19 @@ export function PersonalizeSection({
         <p className="eyebrow">Your idea is ready</p>
         <h2>Review your request.</h2>
         <p className="personalize-review__intro">
-          Copy this note, then continue to {contactChannel}. You can edit it or
-          attach your own inspiration photos before sending.
+          Copy this note, then message us on Instagram or continue with
+          WhatsApp. You can edit it or attach your own inspiration photos
+          before sending.
         </p>
         <div className="personalize-review__message">
           <p>{requestMessage}</p>
         </div>
         <div className="personalize-review__actions">
-          <button className="button button--primary" type="button" onClick={copyRequest}>
+          <button
+            className="button button--primary personalize-review__copy"
+            type="button"
+            onClick={copyRequest}
+          >
             {copyStatus === 'copied' ? (
               <Check aria-hidden="true" />
             ) : (
@@ -582,18 +588,30 @@ export function PersonalizeSection({
           </button>
           <a
             className="button button--coral"
+            href={siteConfig.instagramMessageUrl}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <InstagramIcon />
+            Message on Instagram
+          </a>
+          <a
+            className="button button--light"
             href={messageContactHref(requestMessage)}
             target="_blank"
             rel="noreferrer"
           >
             <MessageCircle aria-hidden="true" />
-            Open {contactChannel}
+            Continue on WhatsApp
           </a>
         </div>
         <p className="personalize-review__status" aria-live="polite">
-          {copyStatus === 'copied' && 'Copied — now paste it into your message.'}
+          {copyStatus === 'copied' &&
+            'Copied — paste it into Instagram, or continue to WhatsApp.'}
           {copyStatus === 'error' &&
             'Copy was blocked by your browser. Select the message above and copy it manually.'}
+          {copyStatus === 'idle' &&
+            'Instagram cannot fill the note automatically, so copy it before opening your message.'}
         </p>
         <p className="personalize-review__fine-print">
           This request is not a confirmed order. Terra Brasilis will confirm

@@ -193,15 +193,15 @@ export function InteriorPageShell({
             </div>
             <div>
               <p className="eyebrow">Connect</p>
-              <a href={contactHref()} target="_blank" rel="noreferrer">
-                WhatsApp
-              </a>
               <a
-                href={siteConfig.instagramUrl}
+                href={siteConfig.instagramMessageUrl}
                 target="_blank"
                 rel="noreferrer"
               >
-                Instagram
+                Instagram message
+              </a>
+              <a href={contactHref()} target="_blank" rel="noreferrer">
+                WhatsApp
               </a>
               <span>{siteConfig.location}</span>
             </div>

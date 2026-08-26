@@ -11,7 +11,7 @@ custom checkout system yet.
 The homepage also includes a personalized-jewelry request builder. Customers
 can choose a piece type, select up to three catalog models as inspiration, add
 a name, colors, theme, date, and notes, then copy the generated request and
-continue the conversation through WhatsApp.
+continue through Instagram direct message first or WhatsApp second.
 
 ## Site structure
 
@@ -59,12 +59,13 @@ The sample catalog entries are placeholders based on product types currently
 shown publicly by Terra Brasilis. Confirm all final names, availability,
 materials, prices, and policies with the owners before publishing.
 
-## WhatsApp ordering
+## Message-based ordering
 
-Every product inquiry and contact button opens WhatsApp with a prewritten
-message. To send visitors straight to the Terra Brasilis chat, set
-`whatsappNumber` in `src/data/siteContent.ts` to digits only, including the
-country code:
+Product inquiries offer Instagram direct message first and WhatsApp second.
+Instagram cannot prefill the request, so customers can copy the prepared note
+before opening the profile. To send WhatsApp visitors straight to the Terra
+Brasilis chat, set `whatsappNumber` in `src/data/siteContent.ts` to digits only,
+including the country code:
 
 ```ts
 whatsappNumber: '18125551234',
@@ -81,7 +82,7 @@ colorful, labeled placeholder in the final photo's position.
 
 ## Suggested launch path
 
-1. Launch this catalog with WhatsApp ordering.
+1. Launch this catalog with Instagram-message and WhatsApp ordering.
 2. Add real product data and consistent photography.
 3. Track how many inquiries turn into purchases and what questions customers
    ask most often.

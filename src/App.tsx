@@ -16,7 +16,6 @@ import { InquiryDialog } from './components/InquiryDialog'
 import { PersonalizeSection } from './components/PersonalizeSection'
 import { PhotoFrame } from './components/PhotoFrame'
 import {
-  contactChannel,
   contactHref,
   navItems,
   photos,
@@ -240,7 +239,7 @@ function App() {
               </div>
               <p>
                 See something you love? Ask us about availability and purchase
-                details through {contactChannel}.
+                details by Instagram message first, or through WhatsApp.
               </p>
             </div>
 
@@ -459,19 +458,28 @@ function App() {
               <p className="eyebrow">See it. Love it. Message us.</p>
               <h2 id="contact-title">Your next favorite piece starts with hello.</h2>
               <p>
-                We currently take orders through WhatsApp. Tell us what
-                caught your eye and we&apos;ll help with availability, price, and
-                purchase details.
+                Send us an Instagram message first, or choose WhatsApp if you
+                prefer. Tell us what caught your eye and we&apos;ll help with
+                availability, price, and purchase details.
               </p>
               <div className="contact__actions">
                 <a
                   className="button button--coral"
+                  href={siteConfig.instagramMessageUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <InstagramIcon />
+                  Message us on Instagram
+                </a>
+                <a
+                  className="button button--outline contact__personalize"
                   href={contactHref()}
                   target="_blank"
                   rel="noreferrer"
                 >
                   <MessageCircle aria-hidden="true" />
-                  Message us on {contactChannel}
+                  Continue on WhatsApp
                 </a>
                 <a
                   className="button button--outline contact__personalize"
@@ -532,11 +540,15 @@ function App() {
             </div>
             <div>
               <p className="eyebrow">Connect</p>
+              <a
+                href={siteConfig.instagramMessageUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Instagram message
+              </a>
               <a href={contactHref()} target="_blank" rel="noreferrer">
                 WhatsApp
-              </a>
-              <a href={siteConfig.instagramUrl} target="_blank" rel="noreferrer">
-                Instagram
               </a>
               <span>{siteConfig.location}</span>
             </div>
@@ -550,13 +562,11 @@ function App() {
 
       <a
         className="floating-contact"
-        href={contactHref()}
-        target="_blank"
-        rel="noreferrer"
-        aria-label={`Let's talk — message Terra Brasilis on ${contactChannel}`}
+        href="/contact/"
+        aria-label="See Instagram and WhatsApp contact options"
       >
         <MessageCircle aria-hidden="true" />
-        <span>Let&apos;s talk</span>
+        <span>Contact us</span>
       </a>
 
       <InquiryDialog

@@ -35,9 +35,9 @@ export function ContactPage() {
             <p className="eyebrow">Contact us</p>
             <h1>Let&apos;s make something joyful together.</h1>
             <p>
-              Find our Instagram and WhatsApp information in one place. Orders,
-              availability questions, and personalized requests are handled on
-              WhatsApp.
+              Send us an Instagram message first, or choose WhatsApp if you
+              prefer. We can help with availability, orders, and personalized
+              requests through either option.
             </p>
           </div>
           <div className="page-contact-hero__location">
@@ -67,16 +67,16 @@ export function ContactPage() {
             <p className="contact-method__label">Instagram</p>
             <h3>{siteConfig.instagramHandle}</h3>
             <p className="contact-method__copy">
-              Follow our latest work, market dates, and behind-the-scenes
-              moments. For orders and jewelry questions, please use WhatsApp.
+              Our first contact option. Follow our latest work or send a direct
+              message about a piece, an order, or a personalized idea.
             </p>
             <a
               className="button button--outline contact-method__button"
-              href={siteConfig.instagramUrl}
+              href={siteConfig.instagramMessageUrl}
               target="_blank"
               rel="noreferrer"
             >
-              Visit our Instagram
+              Message us on Instagram
               <ArrowUpRight aria-hidden="true" />
             </a>
           </article>
@@ -88,8 +88,8 @@ export function ContactPage() {
             <p className="contact-method__label">WhatsApp</p>
             <h3>{formatWhatsAppNumber(siteConfig.whatsappNumber)}</h3>
             <p className="contact-method__copy">
-              Start a conversation about availability, ordering, or a custom
-              jewelry idea.
+              Prefer WhatsApp? Use it as the second option for availability,
+              ordering, or a custom jewelry idea.
             </p>
             <a
               className="button button--coral contact-method__button"
@@ -135,7 +135,7 @@ export function ContactPage() {
             <h2>Begin with your colors, theme, and favorite inspirations.</h2>
             <p>
               Tell us what you imagine, then send the completed request to us
-              through WhatsApp.
+              by Instagram message or WhatsApp.
             </p>
           </div>
           <div className="page-callout__actions">

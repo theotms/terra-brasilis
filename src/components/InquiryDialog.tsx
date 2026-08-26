@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Check, Copy, MessageCircle, X } from 'lucide-react'
-import {
-  contactChannel,
-  contactHref,
-  inquiryMessage,
-} from '../data/siteContent'
+import { contactHref, inquiryMessage, siteConfig } from '../data/siteContent'
+import { InstagramIcon } from './InstagramIcon'
 
 type InquiryDialogProps = {
   piece: string | null
@@ -57,8 +54,8 @@ export function InquiryDialog({ piece, onClose }: InquiryDialogProps) {
       <p className="eyebrow">Let&apos;s find your piece</p>
       <h2>Ask about {piece}</h2>
       <p className="inquiry-dialog__intro">
-        Each piece is made in small quantities. Send us this quick note and
-        we&apos;ll confirm availability, price, and the purchase details.
+        Each piece is made in small quantities. Copy this quick note, then
+        message us on Instagram or continue with WhatsApp.
       </p>
       <div className="message-preview">
         <p>{message}</p>
@@ -67,15 +64,30 @@ export function InquiryDialog({ piece, onClose }: InquiryDialogProps) {
           {copied ? 'Copied' : 'Copy note'}
         </button>
       </div>
-      <a
-        className="button button--primary button--full"
-        href={contactHref(piece ?? undefined)}
-        target="_blank"
-        rel="noreferrer"
-      >
-        <MessageCircle aria-hidden="true" />
-        Continue on {contactChannel}
-      </a>
+      <div className="inquiry-dialog__actions">
+        <a
+          className="button button--coral button--full"
+          href={siteConfig.instagramMessageUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <InstagramIcon />
+          Message on Instagram
+        </a>
+        <a
+          className="button button--outline button--full"
+          href={contactHref(piece ?? undefined)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <MessageCircle aria-hidden="true" />
+          Continue on WhatsApp
+        </a>
+      </div>
+      <p className="inquiry-dialog__hint">
+        Instagram opens first. Paste the copied note into your message, or use
+        WhatsApp as the second option.
+      </p>
     </dialog>
   )
 }
