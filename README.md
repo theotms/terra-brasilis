@@ -55,6 +55,10 @@ Use it to update:
 - Image paths and alt text
 - Navigation links
 
+The official brand logo is stored at
+`public/images/brand/official-logo.jpg` and is used by the shared header and
+footer on every page.
+
 The sample catalog entries are placeholders based on product types currently
 shown publicly by Terra Brasilis. Confirm all final names, availability,
 materials, prices, and policies with the owners before publishing.
