@@ -5,13 +5,15 @@ type BrandProps = {
 
 export function BrandMark() {
   return (
-    <img
-      className="brand-mark"
-      src="/images/brand/official-logo.jpg"
-      alt=""
-      width="947"
-      height="946"
-    />
+    <span className="brand-mark" aria-hidden="true">
+      <img
+        className="brand-mark__image"
+        src="/images/brand/official-logo.jpg"
+        alt=""
+        width="947"
+        height="946"
+      />
+    </span>
   )
 }
 
