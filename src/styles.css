@@ -296,7 +296,6 @@ blockquote {
   overflow: hidden;
   border-radius: 50%;
   background: var(--forest);
-  box-shadow: 0 0.25rem 1rem rgba(16, 47, 27, 0.2);
 }
 
 .brand-mark__image {
