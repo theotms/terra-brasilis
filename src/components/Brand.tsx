@@ -10,7 +10,7 @@ export function BrandMark() {
         className="brand-mark__image"
         src="/images/brand/official-logo.jpg"
         alt=""
-        width="947"
+        width="945"
         height="946"
       />
     </span>
