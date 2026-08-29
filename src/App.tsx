@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ArrowDownRight,
   ArrowRight,
@@ -23,32 +23,15 @@ import {
   siteConfig,
 } from './data/siteContent'
 
-const categories = [
-  'All',
-  'Necklaces',
-  'Bracelets',
-  'Anklets',
-  'Accessories',
-] as const
-
-type Category = (typeof categories)[number]
+const featuredProducts = products.slice(0, 6)
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
-  const [activeCategory, setActiveCategory] = useState<Category>('All')
   const [inquiryPiece, setInquiryPiece] = useState<string | null>(null)
   const [personalizationReferences, setPersonalizationReferences] = useState<
     string[]
   >([])
   const [personalizationNotice, setPersonalizationNotice] = useState('')
-
-  const visibleProducts = useMemo(
-    () =>
-      activeCategory === 'All'
-        ? products
-        : products.filter((product) => product.category === activeCategory),
-    [activeCategory],
-  )
 
   useEffect(() => {
     const targetId = window.location.hash.slice(1)
@@ -243,22 +226,16 @@ function App() {
               </p>
             </div>
 
-            <div className="collection-filters reveal" aria-label="Filter collection">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  type="button"
-                  className={activeCategory === category ? 'is-active' : ''}
-                  aria-pressed={activeCategory === category}
-                  onClick={() => setActiveCategory(category)}
-                >
-                  {category}
-                </button>
-              ))}
+            <div className="collection-preview__actions reveal">
+              <p>A first look at the necklace collection.</p>
+              <a className="text-link text-link--light" href="/collection/">
+                View every necklace
+                <ArrowRight aria-hidden="true" />
+              </a>
             </div>
 
             <div className="product-grid" aria-live="polite">
-              {visibleProducts.map((product, index) => (
+              {featuredProducts.map((product, index) => (
                 <article
                   className="product-card reveal"
                   key={product.id}

@@ -1,3 +1,12 @@
+import {
+  necklaceCatalog,
+  type MetalTone,
+  type NecklaceColor,
+} from './necklaceCatalog'
+
+export { necklaceColors } from './necklaceCatalog'
+export type { MetalTone, NecklaceColor } from './necklaceCatalog'
+
 export type PhotoTone =
   | 'forest'
   | 'sun'
@@ -8,6 +17,7 @@ export type PhotoTone =
 
 export type PhotoAsset = {
   src: string
+  alternateSrcs?: readonly string[]
   alt: string
   placeholderLabel: string
   tone: PhotoTone
@@ -18,6 +28,8 @@ export type Product = {
   name: string
   category: 'Necklaces' | 'Bracelets' | 'Anklets' | 'Accessories'
   detail: string
+  colors: NecklaceColor[]
+  metal: MetalTone
   badge?: string
   photo: PhotoAsset
 }
@@ -42,84 +54,70 @@ export const navItems = [
   { label: 'Contact', href: '/contact/' },
 ]
 
-// These are sample catalog entries. Replace their names and details with the
-// real collection when photography is ready.
-export const products: Product[] = [
-  {
-    id: 'color-story-necklace',
-    name: 'Color Story Necklace',
+const colorLabels: Record<NecklaceColor, string> = {
+  black: 'Black',
+  white: 'White',
+  red: 'Red',
+  orange: 'Orange',
+  yellow: 'Yellow',
+  green: 'Green',
+  blue: 'Blue',
+  turquoise: 'Turquoise',
+  purple: 'Purple',
+  pink: 'Pink',
+  brown: 'Brown',
+  beige: 'Beige',
+  multicolor: 'Multicolor',
+}
+
+const metalLabels: Record<MetalTone, string> = {
+  gold: 'Gold-tone details',
+  silver: 'Silver-tone details',
+  mixed: 'Mixed-metal details',
+  none: 'Beaded finish',
+}
+
+function formatColors(colors: readonly NecklaceColor[]) {
+  if (colors.includes('multicolor')) return 'Multicolor'
+
+  const labels = colors.slice(0, 3).map((color) => colorLabels[color])
+  if (labels.length < 2) return labels[0]
+  if (labels.length === 2) return labels.join(' & ')
+
+  return `${labels.slice(0, -1).join(', ')} & ${labels.at(-1)}`
+}
+
+function photoTone(colors: readonly NecklaceColor[]): PhotoTone {
+  if (colors.includes('turquoise') || colors.includes('blue')) return 'ocean'
+  if (colors.includes('orange') || colors.includes('yellow')) return 'sun'
+  if (colors.includes('red') || colors.includes('pink') || colors.includes('purple')) return 'rose'
+  if (colors.includes('green')) return 'forest'
+  if (colors.includes('brown') || colors.includes('beige')) return 'clay'
+
+  return 'forest'
+}
+
+export const products: Product[] = necklaceCatalog.map((necklace, index) => {
+  const number = String(index + 1).padStart(3, '0')
+
+  return {
+    id: `necklace-${necklace.source}`,
+    name: necklace.name,
     category: 'Necklaces',
-    detail: 'Joyful color · handmade slowly',
-    badge: 'New',
+    detail: `${formatColors(necklace.colors)} · ${metalLabels[necklace.metal]}`,
+    colors: [...necklace.colors],
+    metal: necklace.metal,
     photo: {
-      src: '',
-      alt: 'A colorful handmade beaded necklace',
-      placeholderLabel: 'Product 01 · necklace on warm linen',
-      tone: 'sun',
+      src: `/images/products/necklaces/${necklace.source}.webp`,
+      alternateSrcs: necklace.alternateSources?.map(
+        (source) => `/images/products/necklaces/${source}.webp`,
+      ),
+      alt: `The ${necklace.name} handmade necklace displayed on a black jewelry bust`,
+      placeholderLabel: `Necklace ${number} · ${necklace.name}`,
+      tone: photoTone(necklace.colors),
     },
-  },
-  {
-    id: 'textile-amulet',
-    name: 'Textile Amulet',
-    category: 'Necklaces',
-    detail: 'Crocheted detail · one of a kind',
-    photo: {
-      src: '',
-      alt: 'A handmade textile amulet necklace',
-      placeholderLabel: 'Product 02 · amulet close-up',
-      tone: 'ocean',
-    },
-  },
-  {
-    id: 'bracelet-stack',
-    name: 'Colorful Bracelet Stack',
-    category: 'Bracelets',
-    detail: 'Mix, layer, make it yours',
-    badge: 'One of one',
-    photo: {
-      src: '',
-      alt: 'A stack of colorful handmade bracelets',
-      placeholderLabel: 'Product 03 · bracelets being worn',
-      tone: 'rose',
-    },
-  },
-  {
-    id: 'summer-anklet',
-    name: 'Summer Anklet',
-    category: 'Anklets',
-    detail: 'Bright beads · made for sunshine',
-    photo: {
-      src: '',
-      alt: 'A colorful handmade beaded anklet',
-      placeholderLabel: 'Product 04 · anklet in motion',
-      tone: 'lime',
-    },
-  },
-  {
-    id: 'personalized-keychain',
-    name: 'Personalized Keychain',
-    category: 'Accessories',
-    detail: 'Custom letters · made for you',
-    photo: {
-      src: '',
-      alt: 'A personalized handmade beaded keychain',
-      placeholderLabel: 'Product 05 · custom keychain',
-      tone: 'clay',
-    },
-  },
-  {
-    id: 'beaded-bag-charm',
-    name: 'Beaded Bag Charm',
-    category: 'Accessories',
-    detail: 'Playful color · personalized detail',
-    photo: {
-      src: '',
-      alt: 'A colorful handmade beaded bag charm',
-      placeholderLabel: 'Product 06 · charm on a bag',
-      tone: 'forest',
-    },
-  },
-]
+  }
+})
 
 export const photos = {
   hero: {

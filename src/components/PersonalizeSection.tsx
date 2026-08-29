@@ -5,6 +5,7 @@ import {
   Copy,
   Heart,
   MessageCircle,
+  Search,
   Sparkles,
   X,
 } from 'lucide-react'
@@ -85,6 +86,15 @@ const initialDetails: RequestDetails = {
   whatsappNumber: '',
 }
 
+const referencePageSize = 24
+
+function normalizeSearch(value: string) {
+  return value
+    .normalize('NFD')
+    .replaceAll(/\p{Diacritic}/gu, '')
+    .toLocaleLowerCase('pt-BR')
+}
+
 function formatDate(value: string) {
   if (!value) return ''
 
@@ -104,6 +114,9 @@ export function PersonalizeSection({
 }: PersonalizeSectionProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [details, setDetails] = useState<RequestDetails>(initialDetails)
+  const [referenceSearch, setReferenceSearch] = useState('')
+  const [visibleReferenceCount, setVisibleReferenceCount] =
+    useState(referencePageSize)
   const [copyStatus, setCopyStatus] = useState<
     'idle' | 'copied' | 'error'
   >('idle')
@@ -113,6 +126,27 @@ export function PersonalizeSection({
       products.filter((product) => selectedReferences.includes(product.id)),
     [selectedReferences],
   )
+
+  const matchingReferenceProducts = useMemo(() => {
+    const query = normalizeSearch(referenceSearch.trim())
+    if (!query) return products
+
+    return products.filter((product) =>
+      normalizeSearch(product.name).includes(query),
+    )
+  }, [referenceSearch])
+
+  const visibleReferenceProducts = useMemo(() => {
+    const visibleMatches = matchingReferenceProducts.slice(
+      0,
+      visibleReferenceCount,
+    )
+    const selectedOutsideView = selectedProducts.filter(
+      (product) => !visibleMatches.some((visible) => visible.id === product.id),
+    )
+
+    return [...selectedOutsideView, ...visibleMatches]
+  }, [matchingReferenceProducts, selectedProducts, visibleReferenceCount])
 
   const requestMessage = useMemo(() => {
     const inspiration = selectedProducts.length
@@ -334,8 +368,31 @@ export function PersonalizeSection({
               </p>
             </div>
 
+            <div className="reference-browser-tools">
+              <label className="reference-search">
+                <span>Search by necklace name</span>
+                <span className="reference-search__field">
+                  <Search aria-hidden="true" />
+                  <input
+                    type="search"
+                    value={referenceSearch}
+                    placeholder="Try Iara, maré, onça…"
+                    onChange={(event) => {
+                      setReferenceSearch(event.target.value)
+                      setVisibleReferenceCount(referencePageSize)
+                    }}
+                  />
+                </span>
+              </label>
+              <p aria-live="polite">
+                Showing {Math.min(visibleReferenceCount, matchingReferenceProducts.length)} of{' '}
+                {matchingReferenceProducts.length}{' '}
+                {matchingReferenceProducts.length === 1 ? 'model' : 'models'}
+              </p>
+            </div>
+
             <div className="reference-grid">
-              {products.map((product) => {
+              {visibleReferenceProducts.map((product) => {
                 const selected = selectedReferences.includes(product.id)
                 const disabled = maximumSelected && !selected
 
@@ -376,7 +433,37 @@ export function PersonalizeSection({
                   </div>
                 )
               })}
+              {matchingReferenceProducts.length === 0 && (
+                <div className="reference-search-empty">
+                  <p>No necklace matches “{referenceSearch}”.</p>
+                  <button
+                    type="button"
+                    className="text-link"
+                    onClick={() => setReferenceSearch('')}
+                  >
+                    Clear search
+                  </button>
+                </div>
+              )}
             </div>
+
+            {visibleReferenceCount < matchingReferenceProducts.length && (
+              <button
+                type="button"
+                className="button button--outline reference-load-more"
+                onClick={() =>
+                  setVisibleReferenceCount((current) =>
+                    Math.min(
+                      current + referencePageSize,
+                      matchingReferenceProducts.length,
+                    ),
+                  )
+                }
+              >
+                Show more models
+                <ArrowRight aria-hidden="true" />
+              </button>
+            )}
 
             <div className="reference-grid__footer">
               <button

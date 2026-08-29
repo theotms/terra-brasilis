@@ -12,17 +12,33 @@ export function PhotoFrame({
   className = '',
   eager = false,
 }: PhotoFrameProps) {
+  const alternateSrcs = photo.alternateSrcs ?? []
+
   return (
     <div
       className={`photo-frame photo-frame--${photo.tone} ${className}`.trim()}
+      data-alternate-count={alternateSrcs.length || undefined}
     >
       {photo.src ? (
-        <img
-          src={photo.src}
-          alt={photo.alt}
-          loading={eager ? 'eager' : 'lazy'}
-          fetchPriority={eager ? 'high' : 'auto'}
-        />
+        <>
+          <img
+            className="photo-frame__image photo-frame__image--primary"
+            src={photo.src}
+            alt={photo.alt}
+            loading={eager ? 'eager' : 'lazy'}
+            fetchPriority={eager ? 'high' : 'auto'}
+          />
+          {alternateSrcs.map((src, index) => (
+            <img
+              className={`photo-frame__image photo-frame__image--alternate photo-frame__image--alternate-${index + 1}`}
+              src={src}
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              key={src}
+            />
+          ))}
+        </>
       ) : (
         <div
           className="photo-placeholder"

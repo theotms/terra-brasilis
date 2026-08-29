@@ -13,7 +13,28 @@ To add a photo:
 
 Do not import files from `public`. Paths always begin with `/images/`.
 
-## Recommended files
+## Necklace catalog
+
+The live necklace catalog uses optimized WebP files from
+`products/necklaces/`. Names, colors, metal finishes, and source filenames are
+mapped in `src/data/necklaceCatalog.ts`.
+
+Each product uses `source` for its solo image. When a photo shows several
+necklaces together, that image is listed in `alternateSources` on every matching
+solo product and appears as its hover view instead of becoming another product.
+
+To prepare another folder of camera JPEGs, run:
+
+```bash
+node scripts/prepare-necklaces.mjs <input-folder> public/images/products/necklaces <contact-sheet-folder>
+npm run audit:necklaces
+```
+
+The importer auto-rotates camera images, limits them to 1200×1600, creates
+WebP copies, and produces numbered contact sheets for visual cataloging. Keep
+the original camera files outside the repository.
+
+## Recommended brand files
 
 | Folder | Suggested filename | Crop / minimum size | Shot |
 | --- | --- | --- | --- |
@@ -21,7 +42,6 @@ Do not import files from `public`. Paths always begin with `/images/`.
 | `story/` | `about-founders.webp` | 4:5 portrait, 1600×2000 | Mother and daughter together, both wearing pieces |
 | `story/` | `process-hands.webp` | 4:5 portrait, 1600×2000 | Hands assembling beads or textile details |
 | `story/` | `process-detail.webp` | 4:5 portrait, 1600×2000 | Beads, tools, cords, charms, and color selection |
-| `products/` | `product-01.webp` through `product-06.webp` | 4:5 portrait, 1600×2000 | One clean product or worn detail per card |
 | `instagram/` | `instagram-01.webp` through `instagram-03.webp` | Square, 1080×1080 | Product flat lay, jewelry being worn, and behind the scenes |
 
 ## Product-photo checklist
@@ -44,7 +64,7 @@ have room to work.
 - `photos.makers` → `story/process-hands.webp`
 - `photos.detail` → `story/process-detail.webp`
 - `photos.instagram[0..2]` → `instagram/instagram-01..03.webp`
-- `products[0..5].photo` → `products/product-01..06.webp`
+- `necklaceCatalog` → `products/necklaces/*.webp`
 
-If the collection grows, duplicate a product object in
-`src/data/siteContent.ts`; the grid and filters update automatically.
+When the collection grows, add the optimized image and its metadata entry to
+`src/data/necklaceCatalog.ts`; the grids and filters update automatically.

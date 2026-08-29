@@ -37,6 +37,7 @@ npm run dev
 Production checks:
 
 ```bash
+npm run audit:necklaces
 npm run lint
 npm run build
 npm run preview
@@ -44,14 +45,15 @@ npm run preview
 
 ## Update the website
 
-Most day-to-day content lives in one file:
+Most day-to-day content lives in these files:
 
 - `src/data/siteContent.ts`
+- `src/data/necklaceCatalog.ts`
 
 Use it to update:
 
 - Instagram and WhatsApp contact settings
-- Product names, categories, labels, and descriptions
+- Necklace names, colors, metal finishes, and image mappings
 - Image paths and alt text
 - Navigation links
 
@@ -59,9 +61,12 @@ The official brand logo is stored at
 `public/images/brand/official-logo.jpg` and is used by the shared header and
 footer on every page.
 
-The sample catalog entries are placeholders based on product types currently
-shown publicly by Terra Brasilis. Confirm all final names, availability,
-materials, prices, and policies with the owners before publishing.
+The necklace catalog contains 170 unique named pieces and 20 grouped styling
+photos. Grouped photos are attached to each necklace they contain and appear
+when a visitor hovers over that product. Iracema is kept as the single listing
+for the duplicate Iracema/Jurema necklace.
+Confirm final availability, exact materials, prices, and policies with the
+owners before publishing.
 
 ## Message-based ordering
 
@@ -78,11 +83,12 @@ whatsappNumber: '18125551234',
 Until that value is present, WhatsApp opens the prepared message and asks the
 visitor to choose a recipient.
 
-## Add real photos
+## Product photos
 
-See `public/images/README.md` for the shot list, sizes, filenames, and exact
-replacement instructions. Until a path is supplied, the site renders a
-colorful, labeled placeholder in the final photo's position.
+Web-ready necklace photos live in `public/images/products/necklaces`. The
+original camera files remain outside the repository. See
+`public/images/README.md` for the remaining brand-photo shot list and the batch
+import workflow.
 
 ## Suggested launch path
 
