@@ -23,7 +23,9 @@ import {
   siteConfig,
 } from './data/siteContent'
 
-const featuredProducts = products.slice(0, 6)
+const featuredProducts = (['necklace', 'bracelet', 'keychain'] as const).flatMap(
+  (type) => products.filter((product) => product.type === type).slice(0, 2),
+)
 
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -227,9 +229,9 @@ function App() {
             </div>
 
             <div className="collection-preview__actions reveal">
-              <p>A first look at the necklace collection.</p>
+              <p>A first look across necklaces, bracelets, and keychains.</p>
               <a className="text-link text-link--light" href="/collection/">
-                View every necklace
+                View the full collection
                 <ArrowRight aria-hidden="true" />
               </a>
             </div>

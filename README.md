@@ -37,7 +37,7 @@ npm run dev
 Production checks:
 
 ```bash
-npm run audit:necklaces
+npm run audit:catalog
 npm run lint
 npm run build
 npm run preview
@@ -49,11 +49,13 @@ Most day-to-day content lives in these files:
 
 - `src/data/siteContent.ts`
 - `src/data/necklaceCatalog.ts`
+- `src/data/braceletCatalog.ts`
+- `src/data/keychainCatalog.ts`
 
 Use it to update:
 
 - Instagram and WhatsApp contact settings
-- Necklace names, colors, metal finishes, and image mappings
+- Product names, types, colors, metal finishes, and image mappings
 - Image paths and alt text
 - Navigation links
 
@@ -61,10 +63,10 @@ The official brand logo is stored at
 `public/images/brand/official-logo.jpg` and is used by the shared header and
 footer on every page.
 
-The necklace catalog contains 170 unique named pieces and 20 grouped styling
-photos. Grouped photos are attached to each necklace they contain and appear
-when a visitor hovers over that product. Iracema is kept as the single listing
-for the duplicate Iracema/Jurema necklace.
+The catalog contains 260 unique named pieces: 170 necklaces, 55 bracelets, and
+35 keychains. Its 26 alternate or grouped photos are attached to the matching
+products and appear when a visitor hovers over the card. Iracema is kept as the
+single listing for the duplicate Iracema/Jurema necklace.
 Confirm final availability, exact materials, prices, and policies with the
 owners before publishing.
 
@@ -85,8 +87,9 @@ visitor to choose a recipient.
 
 ## Product photos
 
-Web-ready necklace photos live in `public/images/products/necklaces`. The
-original camera files remain outside the repository. See
+Web-ready product photos live in `public/images/products/necklaces`,
+`public/images/products/bracelets`, and `public/images/products/keychains`.
+The original camera files remain outside the repository. See
 `public/images/README.md` for the remaining brand-photo shot list and the batch
 import workflow.
 

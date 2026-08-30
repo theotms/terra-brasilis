@@ -1,11 +1,21 @@
-import {
-  necklaceCatalog,
-  type MetalTone,
-  type NecklaceColor,
-} from './necklaceCatalog'
+import { braceletCatalog } from './braceletCatalog'
+import type {
+  CatalogEntry,
+  MetalTone,
+  ProductCategory,
+  ProductColor,
+  ProductType,
+} from './catalogTypes'
+import { keychainCatalog } from './keychainCatalog'
+import { necklaceCatalog } from './necklaceCatalog'
 
-export { necklaceColors } from './necklaceCatalog'
-export type { MetalTone, NecklaceColor } from './necklaceCatalog'
+export { productColors } from './catalogTypes'
+export type {
+  MetalTone,
+  ProductCategory,
+  ProductColor,
+  ProductType,
+} from './catalogTypes'
 
 export type PhotoTone =
   | 'forest'
@@ -26,9 +36,10 @@ export type PhotoAsset = {
 export type Product = {
   id: string
   name: string
-  category: 'Necklaces' | 'Bracelets' | 'Anklets' | 'Accessories'
+  type: ProductType
+  category: ProductCategory
   detail: string
-  colors: NecklaceColor[]
+  colors: ProductColor[]
   metal: MetalTone
   badge?: string
   photo: PhotoAsset
@@ -54,7 +65,7 @@ export const navItems = [
   { label: 'Contact', href: '/contact/' },
 ]
 
-const colorLabels: Record<NecklaceColor, string> = {
+const colorLabels: Record<ProductColor, string> = {
   black: 'Black',
   white: 'White',
   red: 'Red',
@@ -74,10 +85,10 @@ const metalLabels: Record<MetalTone, string> = {
   gold: 'Gold-tone details',
   silver: 'Silver-tone details',
   mixed: 'Mixed-metal details',
-  none: 'Beaded finish',
+  none: 'Handmade finish',
 }
 
-function formatColors(colors: readonly NecklaceColor[]) {
+function formatColors(colors: readonly ProductColor[]) {
   if (colors.includes('multicolor')) return 'Multicolor'
 
   const labels = colors.slice(0, 3).map((color) => colorLabels[color])
@@ -87,7 +98,7 @@ function formatColors(colors: readonly NecklaceColor[]) {
   return `${labels.slice(0, -1).join(', ')} & ${labels.at(-1)}`
 }
 
-function photoTone(colors: readonly NecklaceColor[]): PhotoTone {
+function photoTone(colors: readonly ProductColor[]): PhotoTone {
   if (colors.includes('turquoise') || colors.includes('blue')) return 'ocean'
   if (colors.includes('orange') || colors.includes('yellow')) return 'sun'
   if (colors.includes('red') || colors.includes('pink') || colors.includes('purple')) return 'rose'
@@ -97,27 +108,66 @@ function photoTone(colors: readonly NecklaceColor[]): PhotoTone {
   return 'forest'
 }
 
-export const products: Product[] = necklaceCatalog.map((necklace, index) => {
-  const number = String(index + 1).padStart(3, '0')
+type CatalogGroup = {
+  type: ProductType
+  category: ProductCategory
+  singular: string
+  folder: string
+  altContext: string
+  entries: readonly CatalogEntry[]
+}
 
-  return {
-    id: `necklace-${necklace.source}`,
-    name: necklace.name,
+const catalogGroups: readonly CatalogGroup[] = [
+  {
+    type: 'necklace',
     category: 'Necklaces',
-    detail: `${formatColors(necklace.colors)} · ${metalLabels[necklace.metal]}`,
-    colors: [...necklace.colors],
-    metal: necklace.metal,
-    photo: {
-      src: `/images/products/necklaces/${necklace.source}.webp`,
-      alternateSrcs: necklace.alternateSources?.map(
-        (source) => `/images/products/necklaces/${source}.webp`,
-      ),
-      alt: `The ${necklace.name} handmade necklace displayed on a black jewelry bust`,
-      placeholderLabel: `Necklace ${number} · ${necklace.name}`,
-      tone: photoTone(necklace.colors),
-    },
-  }
-})
+    singular: 'Necklace',
+    folder: 'necklaces',
+    altContext: 'displayed on a black jewelry bust',
+    entries: necklaceCatalog,
+  },
+  {
+    type: 'bracelet',
+    category: 'Bracelets',
+    singular: 'Bracelet',
+    folder: 'bracelets',
+    altContext: 'displayed on a white jewelry cushion',
+    entries: braceletCatalog,
+  },
+  {
+    type: 'keychain',
+    category: 'Keychains',
+    singular: 'Keychain',
+    folder: 'keychains',
+    altContext: 'styled on a wooden display',
+    entries: keychainCatalog,
+  },
+]
+
+export const products: Product[] = catalogGroups.flatMap((group) =>
+  group.entries.map((item, index) => {
+    const number = String(index + 1).padStart(3, '0')
+
+    return {
+      id: `${group.type}-${item.source}`,
+      name: item.name,
+      type: group.type,
+      category: group.category,
+      detail: `${formatColors(item.colors)} · ${metalLabels[item.metal]}`,
+      colors: [...item.colors],
+      metal: item.metal,
+      photo: {
+        src: `/images/products/${group.folder}/${item.source}.webp`,
+        alternateSrcs: item.alternateSources?.map(
+          (source) => `/images/products/${group.folder}/${source}.webp`,
+        ),
+        alt: `The ${item.name} handmade ${group.type} ${group.altContext}`,
+        placeholderLabel: `${group.singular} ${number} · ${item.name}`,
+        tone: photoTone(item.colors),
+      },
+    }
+  }),
+)
 
 export const photos = {
   hero: {

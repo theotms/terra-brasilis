@@ -2843,8 +2843,8 @@ blockquote {
 .catalog-filters__groups {
   display: grid;
   padding-top: 1.5rem;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(1.8rem, 3.5vw, 3.5rem);
 }
 
 .catalog-filter-group {
@@ -2863,6 +2863,7 @@ blockquote {
   font-weight: 500;
 }
 
+.catalog-type-options,
 .catalog-color-options,
 .catalog-metal-options {
   display: flex;
@@ -2870,6 +2871,7 @@ blockquote {
   gap: 0.55rem;
 }
 
+.catalog-type-options button,
 .catalog-color-options button,
 .catalog-metal-options button {
   display: inline-flex;
@@ -2888,6 +2890,8 @@ blockquote {
   transition: color 180ms ease, background 180ms ease, border-color 180ms ease;
 }
 
+.catalog-type-options button:hover,
+.catalog-type-options button.is-active,
 .catalog-color-options button:hover,
 .catalog-metal-options button:hover,
 .catalog-color-options button.is-active,
@@ -2917,6 +2921,13 @@ blockquote {
 
 .catalog-metal-options button:nth-child(3) > span {
   background: #d8dcda;
+}
+
+@media (max-width: 1100px) {
+  .catalog-filters__groups {
+    grid-template-columns: 1fr;
+    gap: 1.8rem;
+  }
 }
 
 .page-product-card .product-card__visual > .photo-frame {

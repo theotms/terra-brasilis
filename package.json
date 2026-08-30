@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "audit:necklaces": "node scripts/audit-necklaces.mjs",
+    "audit:catalog": "node scripts/audit-catalog.mjs",
+    "audit:necklaces": "npm run audit:catalog",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "lint": "eslint .",

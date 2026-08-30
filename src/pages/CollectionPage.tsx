@@ -5,11 +5,12 @@ import { InteriorPageShell } from '../components/InteriorPageShell'
 import { PhotoFrame } from '../components/PhotoFrame'
 import {
   products,
-  type NecklaceColor,
+  type ProductColor,
+  type ProductType,
 } from '../data/siteContent'
 
 const colorOptions: {
-  value: NecklaceColor
+  value: ProductColor
   label: string
   swatch: string
 }[] = [
@@ -40,13 +41,29 @@ const metalOptions = [
 
 type MetalFilter = (typeof metalOptions)[number]['value']
 
+const productTypeOptions: {
+  value: 'any' | ProductType
+  label: string
+}[] = [
+  { value: 'any', label: 'All pieces' },
+  { value: 'necklace', label: 'Necklaces' },
+  { value: 'bracelet', label: 'Bracelets' },
+  { value: 'keychain', label: 'Keychains' },
+]
+
+type ProductTypeFilter = (typeof productTypeOptions)[number]['value']
+
 export function CollectionPage() {
-  const [selectedColors, setSelectedColors] = useState<NecklaceColor[]>([])
+  const [productTypeFilter, setProductTypeFilter] =
+    useState<ProductTypeFilter>('any')
+  const [selectedColors, setSelectedColors] = useState<ProductColor[]>([])
   const [metalFilter, setMetalFilter] = useState<MetalFilter>('any')
   const [inquiryPiece, setInquiryPiece] = useState<string | null>(null)
 
   const visibleProducts = useMemo(
     () => products.filter((product) => {
+      const matchesType =
+        productTypeFilter === 'any' || product.type === productTypeFilter
       const matchesColor =
         selectedColors.length === 0 ||
         selectedColors.some((color) => product.colors.includes(color))
@@ -55,14 +72,17 @@ export function CollectionPage() {
         product.metal === metalFilter ||
         product.metal === 'mixed'
 
-      return matchesColor && matchesMetal
+      return matchesType && matchesColor && matchesMetal
     }),
-    [metalFilter, selectedColors],
+    [metalFilter, productTypeFilter, selectedColors],
   )
 
-  const hasActiveFilters = selectedColors.length > 0 || metalFilter !== 'any'
+  const hasActiveFilters =
+    productTypeFilter !== 'any' ||
+    selectedColors.length > 0 ||
+    metalFilter !== 'any'
 
-  function toggleColor(color: NecklaceColor) {
+  function toggleColor(color: ProductColor) {
     setSelectedColors((current) =>
       current.includes(color)
         ? current.filter((item) => item !== color)
@@ -71,6 +91,7 @@ export function CollectionPage() {
   }
 
   function clearFilters() {
+    setProductTypeFilter('any')
     setSelectedColors([])
     setMetalFilter('any')
   }
@@ -83,8 +104,9 @@ export function CollectionPage() {
             <p className="eyebrow">The collection</p>
             <h1>Small-batch color, made to be noticed.</h1>
             <p>
-              Explore {products.length} handcrafted necklaces, each with its own Brazilian
-              Portuguese name inspired by color, culture, fauna, and flora.
+              Explore {products.length} handcrafted necklaces, bracelets, and
+              keychains, each with its own Brazilian Portuguese name inspired
+              by color, culture, fauna, and flora.
             </p>
           </div>
           <p className="page-hero__note">
@@ -113,8 +135,8 @@ export function CollectionPage() {
           <div className="catalog-filters page-collection__filters">
             <div className="catalog-filters__heading">
               <div>
-                <p className="eyebrow">Filter necklaces</p>
-                <p>Choose as many colors as you like, then select a finish.</p>
+                <p className="eyebrow">Filter the collection</p>
+                <p>Choose a product type, any colors you like, and a finish.</p>
               </div>
               <button
                 className="catalog-filters__clear"
@@ -128,6 +150,23 @@ export function CollectionPage() {
             </div>
 
             <div className="catalog-filters__groups">
+              <fieldset className="catalog-filter-group catalog-filter-group--type">
+                <legend>Product type</legend>
+                <div className="catalog-type-options">
+                  {productTypeOptions.map((option) => (
+                    <button
+                      key={option.value}
+                      type="button"
+                      className={productTypeFilter === option.value ? 'is-active' : ''}
+                      aria-pressed={productTypeFilter === option.value}
+                      onClick={() => setProductTypeFilter(option.value)}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </div>
+              </fieldset>
+
               <fieldset className="catalog-filter-group">
                 <legend>Color</legend>
                 <div className="catalog-color-options">
@@ -176,7 +215,7 @@ export function CollectionPage() {
 
           <p className="page-collection__result-count" aria-live="polite">
             Showing {visibleProducts.length}{' '}
-            {visibleProducts.length === 1 ? 'necklace' : 'necklaces'}
+            {visibleProducts.length === 1 ? 'piece' : 'pieces'}
             {hasActiveFilters ? ' matching your filters' : ''}
           </p>
 

@@ -132,7 +132,7 @@ export function PersonalizeSection({
     if (!query) return products
 
     return products.filter((product) =>
-      normalizeSearch(product.name).includes(query),
+      normalizeSearch(`${product.name} ${product.category}`).includes(query),
     )
   }, [referenceSearch])
 
@@ -150,7 +150,9 @@ export function PersonalizeSection({
 
   const requestMessage = useMemo(() => {
     const inspiration = selectedProducts.length
-      ? selectedProducts.map((product) => product.name).join(', ')
+      ? selectedProducts
+          .map((product) => `${product.name} (${product.type})`)
+          .join(', ')
       : 'No specific model yet — I would like your guidance'
     const themes = details.themes.length
       ? details.themes.join(', ')
@@ -370,13 +372,13 @@ export function PersonalizeSection({
 
             <div className="reference-browser-tools">
               <label className="reference-search">
-                <span>Search by necklace name</span>
+                <span>Search by product name or type</span>
                 <span className="reference-search__field">
                   <Search aria-hidden="true" />
                   <input
                     type="search"
                     value={referenceSearch}
-                    placeholder="Try Iara, maré, onça…"
+                    placeholder="Try Iara, bracelet, onça…"
                     onChange={(event) => {
                       setReferenceSearch(event.target.value)
                       setVisibleReferenceCount(referencePageSize)
@@ -435,7 +437,7 @@ export function PersonalizeSection({
               })}
               {matchingReferenceProducts.length === 0 && (
                 <div className="reference-search-empty">
-                  <p>No necklace matches “{referenceSearch}”.</p>
+                  <p>No product matches “{referenceSearch}”.</p>
                   <button
                     type="button"
                     className="text-link"

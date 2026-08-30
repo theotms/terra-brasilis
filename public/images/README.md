@@ -13,21 +13,22 @@ To add a photo:
 
 Do not import files from `public`. Paths always begin with `/images/`.
 
-## Necklace catalog
+## Product catalog
 
-The live necklace catalog uses optimized WebP files from
-`products/necklaces/`. Names, colors, metal finishes, and source filenames are
-mapped in `src/data/necklaceCatalog.ts`.
+The live catalog uses optimized WebP files from `products/necklaces/`,
+`products/bracelets/`, and `products/keychains/`. Names, colors, metal finishes,
+and source filenames are mapped in the matching catalog file under `src/data/`.
 
-Each product uses `source` for its solo image. When a photo shows several
-necklaces together, that image is listed in `alternateSources` on every matching
-solo product and appears as its hover view instead of becoming another product.
+Each product uses `source` for its primary image. When another photo shows the
+same product or several products together, that image is listed in
+`alternateSources` on every matching primary product and appears as its hover
+view instead of becoming another card.
 
 To prepare another folder of camera JPEGs, run:
 
 ```bash
-node scripts/prepare-necklaces.mjs <input-folder> public/images/products/necklaces <contact-sheet-folder>
-npm run audit:necklaces
+node scripts/prepare-necklaces.mjs <input-folder> public/images/products/<type> <contact-sheet-folder>
+npm run audit:catalog
 ```
 
 The importer auto-rotates camera images, limits them to 1200×1600, creates
@@ -65,6 +66,8 @@ have room to work.
 - `photos.detail` → `story/process-detail.webp`
 - `photos.instagram[0..2]` → `instagram/instagram-01..03.webp`
 - `necklaceCatalog` → `products/necklaces/*.webp`
+- `braceletCatalog` → `products/bracelets/*.webp`
+- `keychainCatalog` → `products/keychains/*.webp`
 
 When the collection grows, add the optimized image and its metadata entry to
-`src/data/necklaceCatalog.ts`; the grids and filters update automatically.
+the matching file in `src/data/`; the grids and filters update automatically.

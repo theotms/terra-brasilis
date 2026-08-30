@@ -1,29 +1,4 @@
-export const necklaceColors = [
-  'black',
-  'white',
-  'red',
-  'orange',
-  'yellow',
-  'green',
-  'blue',
-  'turquoise',
-  'purple',
-  'pink',
-  'brown',
-  'beige',
-  'multicolor',
-] as const
-
-export type NecklaceColor = (typeof necklaceColors)[number]
-export type MetalTone = 'gold' | 'silver' | 'mixed' | 'none'
-
-export type NecklaceCatalogEntry = {
-  source: string
-  name: string
-  colors: readonly NecklaceColor[]
-  metal: MetalTone
-  alternateSources?: readonly string[]
-}
+import type { CatalogEntry } from './catalogTypes'
 
 export const necklaceCatalog = [
   { source: '20260825_131029', name: 'Onça-Pintada', colors: ['black', 'brown', 'beige', 'white'], metal: 'gold' },
@@ -196,4 +171,4 @@ export const necklaceCatalog = [
   { source: '20260825_162603', name: 'Hematita Negra', colors: ['black'], metal: 'silver' },
   { source: '20260825_162626', name: 'Onda Turquesa', colors: ['turquoise', 'white'], metal: 'silver' },
   { source: '20260825_162701', name: 'Anjo Sertanejo', colors: ['beige', 'brown'], metal: 'gold' },
-] satisfies readonly NecklaceCatalogEntry[]
+] satisfies readonly CatalogEntry[]
