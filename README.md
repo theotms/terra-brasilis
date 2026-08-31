@@ -43,6 +43,18 @@ npm run build
 npm run preview
 ```
 
+## Online preview
+
+The latest version on `main` is built and published automatically with GitHub
+Pages:
+
+<https://theotms.github.io/terra-brasilis/>
+
+The deployment workflow runs the catalog audit, lint, and Pages production build
+before publishing. Local development continues to use <http://localhost:5173/>,
+while the GitHub Pages build automatically uses the `/terra-brasilis/` base
+path required by the project URL.
+
 ## Update the website
 
 Most day-to-day content lives in these files:

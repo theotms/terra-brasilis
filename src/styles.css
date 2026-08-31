@@ -2947,6 +2947,12 @@ blockquote {
   row-gap: clamp(2.8rem, 5vw, 4.8rem);
 }
 
+.page-collection__load-more {
+  display: flex;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  justify-content: center;
+}
+
 .catalog-empty-state {
   grid-column: 1 / -1;
   max-width: 36rem;
@@ -3867,6 +3873,17 @@ blockquote {
     --section-space: 5.3rem;
   }
 
+  .text-link {
+    min-height: 2.75rem;
+    padding-block: 0.65rem;
+  }
+
+  .site-footer__links a {
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+  }
+
   html {
     scroll-padding-top: 5.5rem;
   }
@@ -4248,14 +4265,20 @@ blockquote {
     gap: 0.9rem;
   }
 
+  .catalog-filters__clear {
+    min-height: 2.75rem;
+    padding-block: 0.65rem;
+  }
+
   .catalog-color-options,
   .catalog-metal-options {
     gap: 0.45rem;
   }
 
+  .catalog-type-options button,
   .catalog-color-options button,
   .catalog-metal-options button {
-    min-height: 2.4rem;
+    min-height: 2.75rem;
     padding-inline: 0.7rem;
     font-size: 0.58rem;
   }

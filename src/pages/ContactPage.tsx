@@ -9,6 +9,7 @@ import {
 import { InstagramIcon } from '../components/InstagramIcon'
 import { InteriorPageShell } from '../components/InteriorPageShell'
 import { contactHref, siteConfig } from '../data/siteContent'
+import { sitePath } from '../sitePath'
 
 function formatWhatsAppNumber(value: string) {
   const digits = value.replace(/\D/g, '')
@@ -139,11 +140,14 @@ export function ContactPage() {
             </p>
           </div>
           <div className="page-callout__actions">
-            <a className="button button--coral" href="/personalize/">
+            <a
+              className="button button--coral"
+              href={sitePath('/personalize/')}
+            >
               Personalize your piece
               <Sparkles aria-hidden="true" />
             </a>
-            <a className="text-link" href="/collection/">
+            <a className="text-link" href={sitePath('/collection/')}>
               Explore the collection
               <ArrowRight aria-hidden="true" />
             </a>

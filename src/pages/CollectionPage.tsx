@@ -8,6 +8,7 @@ import {
   type ProductColor,
   type ProductType,
 } from '../data/siteContent'
+import { sitePath } from '../sitePath'
 
 const colorOptions: {
   value: ProductColor
@@ -53,11 +54,15 @@ const productTypeOptions: {
 
 type ProductTypeFilter = (typeof productTypeOptions)[number]['value']
 
+const productBatchSize = 18
+
 export function CollectionPage() {
   const [productTypeFilter, setProductTypeFilter] =
     useState<ProductTypeFilter>('any')
   const [selectedColors, setSelectedColors] = useState<ProductColor[]>([])
   const [metalFilter, setMetalFilter] = useState<MetalFilter>('any')
+  const [visibleProductCount, setVisibleProductCount] =
+    useState(productBatchSize)
   const [inquiryPiece, setInquiryPiece] = useState<string | null>(null)
 
   const visibleProducts = useMemo(
@@ -77,12 +82,20 @@ export function CollectionPage() {
     [metalFilter, productTypeFilter, selectedColors],
   )
 
+  const displayedProducts = visibleProducts.slice(0, visibleProductCount)
+  const remainingProductCount = Math.max(
+    visibleProducts.length - displayedProducts.length,
+    0,
+  )
+  const nextBatchSize = Math.min(productBatchSize, remainingProductCount)
+
   const hasActiveFilters =
     productTypeFilter !== 'any' ||
     selectedColors.length > 0 ||
     metalFilter !== 'any'
 
   function toggleColor(color: ProductColor) {
+    setVisibleProductCount(productBatchSize)
     setSelectedColors((current) =>
       current.includes(color)
         ? current.filter((item) => item !== color)
@@ -91,6 +104,7 @@ export function CollectionPage() {
   }
 
   function clearFilters() {
+    setVisibleProductCount(productBatchSize)
     setProductTypeFilter('any')
     setSelectedColors([])
     setMetalFilter('any')
@@ -126,7 +140,7 @@ export function CollectionPage() {
               <p className="eyebrow">Find your favorite</p>
               <h2 id="collection-grid-title">Made by hand, one piece at a time.</h2>
             </div>
-            <a className="text-link" href="/personalize/">
+            <a className="text-link" href={sitePath('/personalize/')}>
               Create something personal
               <Sparkles aria-hidden="true" />
             </a>
@@ -159,7 +173,10 @@ export function CollectionPage() {
                       type="button"
                       className={productTypeFilter === option.value ? 'is-active' : ''}
                       aria-pressed={productTypeFilter === option.value}
-                      onClick={() => setProductTypeFilter(option.value)}
+                      onClick={() => {
+                        setVisibleProductCount(productBatchSize)
+                        setProductTypeFilter(option.value)
+                      }}
                     >
                       {option.label}
                     </button>
@@ -202,7 +219,10 @@ export function CollectionPage() {
                       type="button"
                       className={metalFilter === option.value ? 'is-active' : ''}
                       aria-pressed={metalFilter === option.value}
-                      onClick={() => setMetalFilter(option.value)}
+                      onClick={() => {
+                        setVisibleProductCount(productBatchSize)
+                        setMetalFilter(option.value)
+                      }}
                     >
                       <span aria-hidden="true" />
                       {option.label}
@@ -214,13 +234,13 @@ export function CollectionPage() {
           </div>
 
           <p className="page-collection__result-count" aria-live="polite">
-            Showing {visibleProducts.length}{' '}
+            {visibleProducts.length}{' '}
             {visibleProducts.length === 1 ? 'piece' : 'pieces'}
-            {hasActiveFilters ? ' matching your filters' : ''}
+            {hasActiveFilters ? ' matching your filters' : ' in the collection'}
           </p>
 
           <div className="product-grid page-collection__grid">
-            {visibleProducts.map((product) => (
+            {displayedProducts.map((product) => (
               <article className="product-card page-product-card" key={product.id}>
                 <div className="product-card__visual">
                   <PhotoFrame photo={product.photo} />
@@ -246,7 +266,9 @@ export function CollectionPage() {
                   <div className="product-card__actions page-product-card__actions">
                     <a
                       className="product-card__personalize"
-                      href={`/personalize/?references=${encodeURIComponent(product.id)}`}
+                      href={sitePath(
+                        `/personalize/?references=${encodeURIComponent(product.id)}`,
+                      )}
                       aria-label={`Use as inspiration for a personalized piece: ${product.name}`}
                     >
                       <Sparkles aria-hidden="true" />
@@ -279,6 +301,22 @@ export function CollectionPage() {
               </div>
             )}
           </div>
+          {remainingProductCount > 0 && (
+            <div className="page-collection__load-more">
+              <button
+                className="button button--coral"
+                type="button"
+                onClick={() =>
+                  setVisibleProductCount((current) =>
+                    Math.min(current + productBatchSize, visibleProducts.length),
+                  )
+                }
+              >
+                Load {nextBatchSize} more ({remainingProductCount} remaining)
+                <ArrowRight aria-hidden="true" />
+              </button>
+            </div>
+          )}
       </section>
 
       <section className="page-callout page-callout--collection">
@@ -291,7 +329,10 @@ export function CollectionPage() {
                 preferred jewelry type, colors, name, or theme.
               </p>
             </div>
-            <a className="button button--coral" href="/personalize/">
+            <a
+              className="button button--coral"
+              href={sitePath('/personalize/')}
+            >
               Personalize a piece
               <ArrowRight aria-hidden="true" />
             </a>

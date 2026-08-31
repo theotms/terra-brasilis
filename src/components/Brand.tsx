@@ -1,3 +1,5 @@
+import { sitePath } from '../sitePath'
+
 type BrandProps = {
   inverse?: boolean
   compact?: boolean
@@ -8,7 +10,7 @@ export function BrandMark() {
     <span className="brand-mark" aria-hidden="true">
       <img
         className="brand-mark__image"
-        src="/images/brand/official-logo.jpg"
+        src={sitePath('/images/brand/official-logo.jpg')}
         alt=""
         width="945"
         height="946"

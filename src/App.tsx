@@ -22,6 +22,7 @@ import {
   products,
   siteConfig,
 } from './data/siteContent'
+import { sitePath } from './sitePath'
 
 const featuredProducts = (['necklace', 'bracelet', 'keychain'] as const).flatMap(
   (type) => products.filter((product) => product.type === type).slice(0, 2),
@@ -71,12 +72,16 @@ function App() {
             ))}
           </nav>
 
-          <a className="site-header__brand" href="/" aria-label="Terra Brasilis home">
+          <a
+            className="site-header__brand"
+            href={sitePath('/')}
+            aria-label="Terra Brasilis home"
+          >
             <Brand compact inverse />
           </a>
 
           <div className="site-header__actions">
-            <a className="header-contact" href="/contact/">
+            <a className="header-contact" href={sitePath('/contact/')}>
               Let&apos;s talk
               <ArrowDownRight size={17} aria-hidden="true" />
             </a>
@@ -137,18 +142,24 @@ function App() {
                 the joy of our Brazilian roots.
               </p>
               <div className="hero__buttons">
-                <a className="button button--light" href="/collection/">
+                <a
+                  className="button button--light"
+                  href={sitePath('/collection/')}
+                >
                   Explore the collection
                   <ArrowRight aria-hidden="true" />
                 </a>
                 <a
                   className="button button--hero-personalize"
-                  href="/personalize/"
+                  href={sitePath('/personalize/')}
                 >
                   Personalize a piece
                   <Sparkles aria-hidden="true" />
                 </a>
-                <a className="text-link text-link--light" href="/story/">
+                <a
+                  className="text-link text-link--light"
+                  href={sitePath('/story/')}
+                >
                   Meet the family
                 </a>
               </div>
@@ -208,7 +219,7 @@ function App() {
               We mix vibrant color, thoughtful detail, and the warmth of
               handmade work to create pieces that feel joyful and personal.
             </p>
-            <a className="text-link" href="/story/">
+            <a className="text-link" href={sitePath('/story/')}>
               Discover our story
               <ArrowRight aria-hidden="true" />
             </a>
@@ -230,7 +241,10 @@ function App() {
 
             <div className="collection-preview__actions reveal">
               <p>A first look across necklaces, bracelets, and keychains.</p>
-              <a className="text-link text-link--light" href="/collection/">
+              <a
+                className="text-link text-link--light"
+                href={sitePath('/collection/')}
+              >
                 View the full collection
                 <ArrowRight aria-hidden="true" />
               </a>
@@ -267,7 +281,9 @@ function App() {
                     <div className="product-card__actions">
                       <a
                         className="product-card__personalize"
-                        href={`/personalize/?references=${encodeURIComponent(product.id)}`}
+                        href={sitePath(
+                          `/personalize/?references=${encodeURIComponent(product.id)}`,
+                        )}
                         aria-label={`Use as inspiration: ${product.name}`}
                       >
                         <Sparkles aria-hidden="true" />
@@ -374,7 +390,7 @@ function App() {
 
               <a
                 className="button button--coral makers__personalize"
-                href="/personalize/"
+                href={sitePath('/personalize/')}
               >
                 Personalize a piece
                 <Sparkles aria-hidden="true" />
@@ -462,7 +478,7 @@ function App() {
                 </a>
                 <a
                   className="button button--outline contact__personalize"
-                  href="/personalize/"
+                  href={sitePath('/personalize/')}
                 >
                   Request a personalized piece
                   <Sparkles aria-hidden="true" />
@@ -541,7 +557,7 @@ function App() {
 
       <a
         className="floating-contact"
-        href="/contact/"
+        href={sitePath('/contact/')}
         aria-label="See Instagram and WhatsApp contact options"
       >
         <MessageCircle aria-hidden="true" />

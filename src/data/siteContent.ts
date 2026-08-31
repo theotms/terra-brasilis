@@ -1,4 +1,5 @@
 import { braceletCatalog } from './braceletCatalog'
+import { sitePath } from '../sitePath'
 import type {
   CatalogEntry,
   MetalTone,
@@ -58,11 +59,11 @@ export const siteConfig = {
 }
 
 export const navItems = [
-  { label: 'Collection', href: '/collection/' },
-  { label: 'Our story', href: '/story/' },
-  { label: 'The makers', href: '/makers/' },
-  { label: 'Personalize', href: '/personalize/' },
-  { label: 'Contact', href: '/contact/' },
+  { label: 'Collection', href: sitePath('/collection/') },
+  { label: 'Our story', href: sitePath('/story/') },
+  { label: 'The makers', href: sitePath('/makers/') },
+  { label: 'Personalize', href: sitePath('/personalize/') },
+  { label: 'Contact', href: sitePath('/contact/') },
 ]
 
 const colorLabels: Record<ProductColor, string> = {
@@ -157,9 +158,9 @@ export const products: Product[] = catalogGroups.flatMap((group) =>
       colors: [...item.colors],
       metal: item.metal,
       photo: {
-        src: `/images/products/${group.folder}/${item.source}.webp`,
+        src: sitePath(`/images/products/${group.folder}/${item.source}.webp`),
         alternateSrcs: item.alternateSources?.map(
-          (source) => `/images/products/${group.folder}/${source}.webp`,
+          (source) => sitePath(`/images/products/${group.folder}/${source}.webp`),
         ),
         alt: `The ${item.name} handmade ${group.type} ${group.altContext}`,
         placeholderLabel: `${group.singular} ${number} · ${item.name}`,
@@ -171,31 +172,31 @@ export const products: Product[] = catalogGroups.flatMap((group) =>
 
 export const photos = {
   hero: {
-    src: '/images/team/helena.webp',
+    src: sitePath('/images/team/helena.webp'),
     alt: 'Helena, co-owner of Terra Brasilis, wearing a layered red beaded necklace at the market booth',
     placeholderLabel: 'Helena at the Terra Brasilis market booth',
     tone: 'sun',
   },
   story: {
-    src: '/images/team/helena-yluska-story.webp',
+    src: sitePath('/images/team/helena-yluska-story.webp'),
     alt: 'Helena and Yluska, the Brazilian daughter-and-mother team behind Terra Brasilis',
     placeholderLabel: 'Helena & Yluska · mother-and-daughter portrait',
     tone: 'ocean',
   },
   makers: {
-    src: '/images/team/helena-yluska-makers.webp',
+    src: sitePath('/images/team/helena-yluska-makers.webp'),
     alt: 'Helena and Yluska together at their Terra Brasilis market booth in Terre Haute',
     placeholderLabel: 'Helena & Yluska · the makers at their booth',
     tone: 'clay',
   },
   helena: {
-    src: '/images/team/helena.webp',
+    src: sitePath('/images/team/helena.webp'),
     alt: 'Helena, daughter, co-owner, and maker at Terra Brasilis',
     placeholderLabel: 'Helena · co-owner & maker',
     tone: 'rose',
   },
   yluska: {
-    src: '/images/team/yluska.webp',
+    src: sitePath('/images/team/yluska.webp'),
     alt: 'Yluska, mother, co-owner, and maker at Terra Brasilis',
     placeholderLabel: 'Yluska · co-owner & maker',
     tone: 'forest',
@@ -208,19 +209,19 @@ export const photos = {
   },
   instagram: [
     {
-      src: '/images/products/necklaces/20260825_133012.webp',
+      src: sitePath('/images/products/necklaces/20260825_133012.webp'),
       alt: 'The colorful Maracatu handmade necklace styled with coral flowers',
       placeholderLabel: 'Maracatu necklace',
       tone: 'forest',
     },
     {
-      src: '/images/products/bracelets/20260828_145404.webp',
+      src: sitePath('/images/products/bracelets/20260828_145404.webp'),
       alt: 'The multicolor Aldeia Colorida handmade bracelet styled with flowers',
       placeholderLabel: 'Aldeia Colorida bracelet',
       tone: 'rose',
     },
     {
-      src: '/images/products/keychains/20260828_152545.webp',
+      src: sitePath('/images/products/keychains/20260828_152545.webp'),
       alt: 'The bright Mandala Solar handmade keychain styled on warm wood with flowers',
       placeholderLabel: 'Mandala Solar keychain',
       tone: 'sun',

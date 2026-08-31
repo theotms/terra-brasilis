@@ -3,6 +3,7 @@ import { InstagramIcon } from '../components/InstagramIcon'
 import { InteriorPageShell } from '../components/InteriorPageShell'
 import { PhotoFrame } from '../components/PhotoFrame'
 import { photos, siteConfig } from '../data/siteContent'
+import { sitePath } from '../sitePath'
 
 export function StoryPage() {
   return (
@@ -121,11 +122,14 @@ export function StoryPage() {
               <h2>Discover what we make together.</h2>
             </div>
             <div className="page-callout__actions">
-              <a className="button button--coral" href="/collection/">
+              <a
+                className="button button--coral"
+                href={sitePath('/collection/')}
+              >
                 Explore the collection
                 <ArrowRight aria-hidden="true" />
               </a>
-              <a className="text-link" href="/makers/">
+              <a className="text-link" href={sitePath('/makers/')}>
                 Meet the makers
                 <ArrowRight aria-hidden="true" />
               </a>

@@ -8,6 +8,7 @@
     "audit:necklaces": "npm run audit:catalog",
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:pages": "tsc --noEmit && vite build --mode github-pages",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -2,6 +2,7 @@ import { ArrowRight, Heart, Sparkles } from 'lucide-react'
 import { InteriorPageShell } from '../components/InteriorPageShell'
 import { PhotoFrame } from '../components/PhotoFrame'
 import { photos, siteConfig } from '../data/siteContent'
+import { sitePath } from '../sitePath'
 
 const processSteps = [
   {
@@ -38,7 +39,10 @@ export function MakersPage() {
                 Behind every Terra Brasilis piece are a mother, a daughter,
                 and a shared love for color, detail, and making together.
               </p>
-              <a className="button button--coral" href="/personalize/">
+              <a
+                className="button button--coral"
+                href={sitePath('/personalize/')}
+              >
                 Make it yours
                 <Sparkles aria-hidden="true" />
               </a>
@@ -176,7 +180,7 @@ export function MakersPage() {
               the connection between the idea, the makers, and the person who
               will wear it close from beginning to end.
             </p>
-            <a className="text-link" href="/collection/">
+            <a className="text-link" href={sitePath('/collection/')}>
               See the collection
               <ArrowRight aria-hidden="true" />
             </a>
@@ -193,7 +197,10 @@ export function MakersPage() {
                 Brasilis models to show us what you love.
               </p>
             </div>
-            <a className="button button--coral" href="/personalize/">
+            <a
+              className="button button--coral"
+              href={sitePath('/personalize/')}
+            >
               Start personalizing
               <Sparkles aria-hidden="true" />
             </a>

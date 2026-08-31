@@ -1,7 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
+  base: mode === 'github-pages' ? '/terra-brasilis/' : '/',
   plugins: [react()],
   appType: 'mpa',
   input: {
@@ -12,4 +13,4 @@ export default defineConfig({
     personalize: 'personalize/index.html',
     contact: 'contact/index.html',
   },
-})
+}))

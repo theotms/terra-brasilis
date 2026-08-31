@@ -4,6 +4,7 @@ import { contactHref, siteConfig } from '../data/siteContent'
 import { AnnouncementBar } from './AnnouncementBar'
 import { Brand } from './Brand'
 import { InstagramIcon } from './InstagramIcon'
+import { sitePath } from '../sitePath'
 
 export type InteriorPageId =
   | 'collection'
@@ -23,10 +24,10 @@ const interiorNavItems: ReadonlyArray<{
   label: string
   href: string
 }> = [
-  { id: 'collection', label: 'Collection', href: '/collection/' },
-  { id: 'story', label: 'Our story', href: '/story/' },
-  { id: 'makers', label: 'The makers', href: '/makers/' },
-  { id: 'personalize', label: 'Personalize', href: '/personalize/' },
+  { id: 'collection', label: 'Collection', href: sitePath('/collection/') },
+  { id: 'story', label: 'Our story', href: sitePath('/story/') },
+  { id: 'makers', label: 'The makers', href: sitePath('/makers/') },
+  { id: 'personalize', label: 'Personalize', href: sitePath('/personalize/') },
 ]
 
 export function InteriorPageShell({
@@ -83,7 +84,7 @@ export function InteriorPageShell({
 
           <a
             className="site-header__brand"
-            href="/"
+            href={sitePath('/')}
             aria-label="Terra Brasilis home"
           >
             <Brand compact inverse />
@@ -92,7 +93,7 @@ export function InteriorPageShell({
           <div className="site-header__actions">
             <a
               className="header-contact"
-              href="/contact/"
+              href={sitePath('/contact/')}
               aria-current={activePage === 'contact' ? 'page' : undefined}
             >
               Let&apos;s talk
@@ -132,7 +133,7 @@ export function InteriorPageShell({
               </a>
             ))}
             <a
-              href="/contact/"
+              href={sitePath('/contact/')}
               aria-current={activePage === 'contact' ? 'page' : undefined}
               onClick={closeMenu}
             >
@@ -166,7 +167,7 @@ export function InteriorPageShell({
           <div>
             <a
               className="site-header__brand"
-              href="/"
+              href={sitePath('/')}
             >
               <Brand inverse />
             </a>
@@ -185,7 +186,7 @@ export function InteriorPageShell({
                 </a>
               ))}
               <a
-                href="/contact/"
+                href={sitePath('/contact/')}
                 aria-current={activePage === 'contact' ? 'page' : undefined}
               >
                 Contact
