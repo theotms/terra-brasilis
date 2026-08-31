@@ -1,14 +1,14 @@
 # Image replacement guide
 
-The website works without images: every empty `src` in
-`src/data/siteContent.ts` becomes a styled placeholder with a shot label.
+The website can still display a styled placeholder whenever a photo has an
+empty `src` in `src/data/siteContent.ts`.
 
 To add a photo:
 
 1. Export it as WebP when possible (JPEG also works).
 2. Put it in the matching folder below.
-3. Open `src/data/siteContent.ts` and replace the empty `src: ''` with its
-   public path, such as `src: '/images/hero/hero-founders.webp'`.
+3. Open `src/data/siteContent.ts` and set its public path with `sitePath`, such
+   as `src: sitePath('/images/process/new-workbench-photo.webp')`.
 4. Update the `alt` text so it accurately describes the finished photo.
 
 Do not import files from `public`. Paths always begin with `/images/`.
@@ -35,15 +35,13 @@ The importer auto-rotates camera images, limits them to 1200×1600, creates
 WebP copies, and produces numbered contact sheets for visual cataloging. Keep
 the original camera files outside the repository.
 
-## Recommended brand files
+## Brand and process files
 
 | Folder | Suggested filename | Crop / minimum size | Shot |
 | --- | --- | --- | --- |
-| `hero/` | `hero-founders.webp` | 3:2 landscape, 2400×1600 | Helena and Yluska creating, arranging, or wearing jewelry in warm natural light |
-| `story/` | `about-founders.webp` | 4:5 portrait, 1600×2000 | Mother and daughter together, both wearing pieces |
-| `story/` | `process-hands.webp` | 4:5 portrait, 1600×2000 | Hands assembling beads or textile details |
-| `story/` | `process-detail.webp` | 4:5 portrait, 1600×2000 | Beads, tools, cords, charms, and color selection |
-| `instagram/` | `instagram-01.webp` through `instagram-03.webp` | Square, 1080×1080 | Product flat lay, jewelry being worn, and behind the scenes |
+| `team/` | `helena.webp`, `yluska.webp` | 4:5 portrait, 1600×2000 | Individual and mother-and-daughter portraits |
+| `process/` | descriptive `.webp` name | 4:5 portrait, 1600×2000 | Clay shaping, hands assembling, beads, tools, or styled materials |
+| `products/` | original camera source name | 3:4 portrait, 1200×1600 | Individual necklaces, bracelets, and keychains |
 
 ## Product-photo checklist
 
@@ -60,11 +58,10 @@ have room to work.
 
 ## Current data mapping
 
-- `photos.hero` → `hero/hero-founders.webp`
-- `photos.story` → `story/about-founders.webp`
-- `photos.makers` → `story/process-hands.webp`
-- `photos.detail` → `story/process-detail.webp`
-- `photos.instagram[0..2]` → `instagram/instagram-01..03.webp`
+- `photos.hero` → `process/worn-blue-necklace.webp`
+- `photos.story`, `photos.makers`, `photos.helena`, `photos.yluska` → `team/*.webp`
+- Process, clay, charm, and bead photo entries → `process/*.webp`
+- `photos.instagram[0..2]` → selected `products/*/*.webp` images
 - `necklaceCatalog` → `products/necklaces/*.webp`
 - `braceletCatalog` → `products/bracelets/*.webp`
 - `keychainCatalog` → `products/keychains/*.webp`

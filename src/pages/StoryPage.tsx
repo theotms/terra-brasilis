@@ -94,7 +94,10 @@ export function StoryPage() {
           className="page-story-quote section-shell"
           aria-label="A note from the founders"
         >
-          <PhotoFrame photo={photos.detail} className="page-story-quote__photo" />
+          <PhotoFrame
+            photo={photos.styledCharms}
+            className="page-story-quote__photo"
+          />
           <div className="page-story-quote__copy">
             <blockquote>
               “Our roots cross borders. Our creativity brings them home.”

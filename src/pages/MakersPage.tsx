@@ -27,6 +27,33 @@ const processSteps = [
   },
 ]
 
+const studioMoments = [
+  {
+    number: '01',
+    title: 'Shape',
+    copy: 'Clay details begin in the hands, one small form at a time.',
+    photo: photos.clayShaping,
+  },
+  {
+    number: '02',
+    title: 'Let it rest',
+    copy: 'Hand-shaped charms dry before color, findings, and final details.',
+    photo: photos.clayPieces,
+  },
+  {
+    number: '03',
+    title: 'Assemble',
+    copy: 'Yluska brings charms, beads, and metal details together at the workbench.',
+    photo: photos.assemblyWorkbench,
+  },
+  {
+    number: '04',
+    title: 'Choose the palette',
+    copy: 'Colorful beads turn every new combination into its own little story.',
+    photo: photos.beads,
+  },
+]
+
 export function MakersPage() {
   return (
     <InteriorPageShell activePage="makers">
@@ -54,7 +81,7 @@ export function MakersPage() {
                 eager
               />
               <PhotoFrame
-                photo={photos.detail}
+                photo={photos.clayHeart}
                 className="page-makers-hero__photo-detail"
               />
               <span className="page-makers-hero__note">
@@ -163,6 +190,40 @@ export function MakersPage() {
                 </li>
               ))}
             </ol>
+
+            <div className="page-process__gallery-heading">
+              <div>
+                <p className="eyebrow">Inside the studio</p>
+                <h3 id="studio-moments-title">
+                  Hands, materials, and the moments in between.
+                </h3>
+              </div>
+              <p>
+                A closer look at clay taking shape, Yluska assembling each
+                detail, and the colors waiting to become something new.
+              </p>
+            </div>
+
+            <section
+              className="page-process__gallery"
+              aria-labelledby="studio-moments-title"
+            >
+              {studioMoments.map((moment) => (
+                <figure className="page-process__moment" key={moment.number}>
+                  <PhotoFrame
+                    photo={moment.photo}
+                    className="page-process__moment-photo"
+                  />
+                  <figcaption>
+                    <span>{moment.number}</span>
+                    <div>
+                      <h4>{moment.title}</h4>
+                      <p>{moment.copy}</p>
+                    </div>
+                  </figcaption>
+                </figure>
+              ))}
+            </section>
           </div>
       </section>
 
@@ -170,7 +231,10 @@ export function MakersPage() {
           className="page-makers-detail section-shell"
           aria-labelledby="handmade-matters-title"
         >
-          <PhotoFrame photo={photos.hero} className="page-makers-detail__photo" />
+          <PhotoFrame
+            photo={photos.blueBeads}
+            className="page-makers-detail__photo"
+          />
           <div className="page-makers-detail__copy">
             <Heart aria-hidden="true" />
             <p className="eyebrow">Why handmade matters</p>

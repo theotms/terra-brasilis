@@ -180,8 +180,8 @@ function App() {
               <span>From us to you</span>
             </div>
             <div className="hero__caption">
-              <span>Color you can feel</span>
-              <span>01 — 06</span>
+              <span>Blue florals in the sun</span>
+              <span>Made by hand</span>
             </div>
           </div>
         </section>
@@ -399,7 +399,10 @@ function App() {
 
             <div className="makers__photos reveal">
               <PhotoFrame photo={photos.makers} className="makers__photo-main" />
-              <PhotoFrame photo={photos.detail} className="makers__photo-detail" />
+              <PhotoFrame
+                photo={photos.assemblySunlight}
+                className="makers__photo-detail"
+              />
               <span className="makers__note">Made slowly<br />worn joyfully</span>
             </div>
           </div>

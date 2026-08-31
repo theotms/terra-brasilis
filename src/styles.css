@@ -3422,6 +3422,92 @@ blockquote {
   line-height: 1.65;
 }
 
+.page-process__gallery-heading {
+  display: grid;
+  margin-top: clamp(4rem, 8vw, 7rem);
+  padding-top: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: minmax(22rem, 1.2fr) minmax(18rem, 0.8fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 8rem);
+  border-top: 1px solid rgba(16, 47, 27, 0.28);
+}
+
+.page-process__gallery-heading .eyebrow {
+  margin-bottom: 0.8rem;
+  color: var(--forest-deep);
+}
+
+.page-process__gallery-heading h3 {
+  max-width: 14ch;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 400;
+  line-height: 0.94;
+  letter-spacing: -0.04em;
+}
+
+.page-process__gallery-heading > p {
+  max-width: 35rem;
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.8;
+}
+
+.page-process__gallery {
+  display: grid;
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(1.2rem, 3vw, 2.4rem);
+}
+
+.page-process__moment {
+  min-width: 0;
+  margin: 0;
+  color: var(--cream);
+  background: var(--forest-deep);
+}
+
+.page-process__moment:nth-child(even) {
+  margin-top: clamp(1.5rem, 3vw, 3rem);
+}
+
+.page-process__moment-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.page-process__moment figcaption {
+  display: grid;
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  grid-template-columns: 2.2rem minmax(0, 1fr);
+  gap: 0.8rem;
+}
+
+.page-process__moment figcaption > span {
+  color: var(--coral);
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-style: italic;
+}
+
+.page-process__moment h4 {
+  margin: 0 0 0.45rem;
+  font-family: var(--serif);
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.page-process__moment p {
+  max-width: 31rem;
+  margin: 0;
+  color: rgba(253, 252, 247, 0.66);
+  font-size: 0.72rem;
+  line-height: 1.7;
+}
+
 .page-makers-detail {
   display: grid;
   padding-top: var(--section-space);
@@ -4256,6 +4342,12 @@ blockquote {
   .page-process__list li:nth-child(-n + 2) {
     border-bottom: 1px solid rgba(16, 47, 27, 0.28);
   }
+
+  .page-process__gallery-heading {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.4rem;
+  }
 }
 
 @media (max-width: 650px) {
@@ -4390,6 +4482,14 @@ blockquote {
 
   .page-process__list h3 {
     margin: 0 0 0.4rem;
+  }
+
+  .page-process__gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .page-process__moment:nth-child(even) {
+    margin-top: 0;
   }
 
   .page-callout__inner {

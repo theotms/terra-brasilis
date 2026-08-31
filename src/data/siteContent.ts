@@ -172,10 +172,10 @@ export const products: Product[] = catalogGroups.flatMap((group) =>
 
 export const photos = {
   hero: {
-    src: sitePath('/images/team/helena.webp'),
-    alt: 'Helena, co-owner of Terra Brasilis, wearing a layered red beaded necklace at the market booth',
-    placeholderLabel: 'Helena at the Terra Brasilis market booth',
-    tone: 'sun',
+    src: sitePath('/images/process/worn-blue-necklace.webp'),
+    alt: 'A blue floral fabric-bead Terra Brasilis necklace worn in bright natural light',
+    placeholderLabel: 'Blue fabric-bead necklace in natural light',
+    tone: 'ocean',
   },
   story: {
     src: sitePath('/images/team/helena-yluska-story.webp'),
@@ -201,11 +201,53 @@ export const photos = {
     placeholderLabel: 'Yluska · co-owner & maker',
     tone: 'forest',
   },
-  detail: {
-    src: '',
-    alt: 'Close-up of the handwork in a Terra Brasilis jewelry piece',
-    placeholderLabel: 'Photo to add later · hands, beads & tools',
-    tone: 'lime',
+  beads: {
+    src: sitePath('/images/process/colorful-beads.webp'),
+    alt: 'A colorful organizer filled with ceramic, glass, and stone-look beads for Terra Brasilis pieces',
+    placeholderLabel: 'Colorful beads in the Terra Brasilis studio',
+    tone: 'sun',
+  },
+  clayShaping: {
+    src: sitePath('/images/process/shaping-clay.webp'),
+    alt: 'Hands shaping and piercing a small clay bead at the Terra Brasilis worktable',
+    placeholderLabel: 'Shaping a clay bead by hand',
+    tone: 'clay',
+  },
+  clayHeart: {
+    src: sitePath('/images/process/shaping-clay-heart.webp'),
+    alt: 'Yluska shaping a small heart from clay with handmade forms and tools nearby',
+    placeholderLabel: 'Yluska shaping a clay heart',
+    tone: 'clay',
+  },
+  clayPieces: {
+    src: sitePath('/images/process/dry-clay-charms.webp'),
+    alt: 'Hand-shaped clay fish, shell, heart, and stamped beads resting before their next finish',
+    placeholderLabel: 'Hand-shaped clay charms drying',
+    tone: 'clay',
+  },
+  assemblyWorkbench: {
+    src: sitePath('/images/process/assembly-workbench.webp'),
+    alt: 'Yluska assembling a Terra Brasilis jewelry piece with pliers at her sunlit workbench',
+    placeholderLabel: 'Yluska assembling jewelry at the workbench',
+    tone: 'sun',
+  },
+  assemblySunlight: {
+    src: sitePath('/images/process/assembly-in-sunlight.webp'),
+    alt: 'Yluska selecting charms and assembling jewelry with pliers in warm natural light',
+    placeholderLabel: 'Yluska assembling a piece in natural light',
+    tone: 'sun',
+  },
+  styledCharms: {
+    src: sitePath('/images/process/styled-charms.webp'),
+    alt: 'Shell, coral, protective-eye, and nature-inspired charms styled with red flowers',
+    placeholderLabel: 'Nature-inspired charms and flowers',
+    tone: 'rose',
+  },
+  blueBeads: {
+    src: sitePath('/images/process/styled-blue-beads.webp'),
+    alt: 'Blue ceramic and stone-look focal beads arranged on wood beside red flowers',
+    placeholderLabel: 'Blue focal beads inspired by nature',
+    tone: 'ocean',
   },
   instagram: [
     {
