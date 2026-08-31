@@ -85,6 +85,56 @@ export function MakersPage() {
           </div>
       </section>
 
+      <section
+        className="page-maker-profiles"
+        aria-labelledby="maker-profiles-title"
+      >
+        <div className="section-shell">
+          <div className="page-maker-profiles__heading">
+            <div>
+              <p className="eyebrow">Meet the family</p>
+              <h2 id="maker-profiles-title">Helena &amp; Yluska</h2>
+            </div>
+            <p>
+              A Brazilian daughter and mother building Terra Brasilis together
+              in Terre Haute, Indiana.
+            </p>
+          </div>
+
+          <div className="page-maker-profiles__grid">
+            <article className="maker-profile">
+              <PhotoFrame
+                photo={photos.helena}
+                className="maker-profile__photo"
+              />
+              <div className="maker-profile__copy">
+                <p className="eyebrow">Daughter · co-owner</p>
+                <h3>Helena</h3>
+                <p>
+                  Helena is Yluska&apos;s daughter and one half of the family team
+                  bringing Terra Brasilis to life.
+                </p>
+              </div>
+            </article>
+
+            <article className="maker-profile">
+              <PhotoFrame
+                photo={photos.yluska}
+                className="maker-profile__photo"
+              />
+              <div className="maker-profile__copy">
+                <p className="eyebrow">Mother · co-owner</p>
+                <h3>Yluska</h3>
+                <p>
+                  Yluska is Helena&apos;s mother and the other half of the
+                  mother-and-daughter studio behind every Terra Brasilis piece.
+                </p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section className="page-process" aria-labelledby="making-process-title">
           <div className="section-shell">
             <div className="page-section-heading page-process__heading">

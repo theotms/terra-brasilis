@@ -3290,6 +3290,83 @@ blockquote {
   line-height: 1.85;
 }
 
+.page-maker-profiles {
+  padding-top: var(--section-space);
+  padding-bottom: var(--section-space);
+  background: var(--forest-deep);
+  border-top: 1px solid var(--line-light);
+  border-bottom: 1px solid var(--line-light);
+}
+
+.page-maker-profiles__heading {
+  display: grid;
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+  grid-template-columns: minmax(20rem, 1fr) minmax(18rem, 0.55fr);
+  align-items: end;
+  gap: clamp(2rem, 8vw, 8rem);
+}
+
+.page-maker-profiles__heading .eyebrow,
+.maker-profile__copy .eyebrow {
+  color: var(--gold);
+}
+
+.page-maker-profiles__heading h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(3.5rem, 6vw, 6.4rem);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.045em;
+}
+
+.page-maker-profiles__heading > p {
+  max-width: 34rem;
+  margin: 0;
+  color: rgba(253, 252, 247, 0.68);
+  font-size: 0.82rem;
+  line-height: 1.8;
+}
+
+.page-maker-profiles__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: clamp(1.4rem, 3vw, 2.4rem);
+}
+
+.maker-profile {
+  display: grid;
+  min-width: 0;
+  background: var(--forest);
+  border: 1px solid var(--line-light);
+}
+
+.maker-profile__photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+}
+
+.maker-profile__copy {
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+}
+
+.maker-profile__copy h3 {
+  margin: 0 0 0.8rem;
+  color: var(--cream);
+  font-family: var(--serif);
+  font-size: clamp(2.4rem, 4vw, 3.7rem);
+  font-weight: 500;
+  line-height: 0.95;
+}
+
+.maker-profile__copy > p:last-child {
+  max-width: 34rem;
+  margin: 0;
+  color: rgba(253, 252, 247, 0.68);
+  font-size: 0.76rem;
+  line-height: 1.75;
+}
+
 .page-process {
   padding-top: var(--section-space);
   padding-bottom: var(--section-space);
@@ -4084,6 +4161,12 @@ blockquote {
   .page-makers-intro,
   .page-makers-detail {
     grid-template-columns: 1fr;
+  }
+
+  .page-maker-profiles__heading {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 1.4rem;
   }
 
   .page-contact-methods__heading {
