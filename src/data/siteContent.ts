@@ -9,6 +9,11 @@ import type {
 } from './catalogTypes'
 import { keychainCatalog } from './keychainCatalog'
 import { necklaceCatalog } from './necklaceCatalog'
+import {
+  getProductFacets,
+  type ProductFeature,
+  type ProductTheme,
+} from './productFacets'
 
 export { productColors } from './catalogTypes'
 export type {
@@ -42,6 +47,8 @@ export type Product = {
   detail: string
   colors: ProductColor[]
   metal: MetalTone
+  features: ProductFeature[]
+  themes: ProductTheme[]
   badge?: string
   photo: PhotoAsset
 }
@@ -148,6 +155,7 @@ const catalogGroups: readonly CatalogGroup[] = [
 export const products: Product[] = catalogGroups.flatMap((group) =>
   group.entries.map((item, index) => {
     const number = String(index + 1).padStart(3, '0')
+    const facets = getProductFacets(item.source, item.name)
 
     return {
       id: `${group.type}-${item.source}`,
@@ -157,6 +165,8 @@ export const products: Product[] = catalogGroups.flatMap((group) =>
       detail: `${formatColors(item.colors)} · ${metalLabels[item.metal]}`,
       colors: [...item.colors],
       metal: item.metal,
+      features: facets.features,
+      themes: facets.themes,
       photo: {
         src: sitePath(`/images/products/${group.folder}/${item.source}.webp`),
         alternateSrcs: item.alternateSources?.map(

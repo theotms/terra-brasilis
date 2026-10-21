@@ -15,6 +15,12 @@ import {
   type ProductColor,
   type ProductType,
 } from '../data/siteContent'
+import {
+  productFeatureOptions,
+  productThemeOptions,
+  type ProductFeature,
+  type ProductTheme,
+} from '../data/productFacets'
 import { sitePath } from '../sitePath'
 
 const colorOptions: {
@@ -65,6 +71,8 @@ export function CollectionPage() {
     ProductType[]
   >([])
   const [selectedColors, setSelectedColors] = useState<ProductColor[]>([])
+  const [selectedFeatures, setSelectedFeatures] = useState<ProductFeature[]>([])
+  const [selectedThemes, setSelectedThemes] = useState<ProductTheme[]>([])
   const [metalFilter, setMetalFilter] = useState<MetalFilter>('any')
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [visibleProductCount, setVisibleProductCount] =
@@ -79,14 +87,32 @@ export function CollectionPage() {
       const matchesColor =
         selectedColors.length === 0 ||
         selectedColors.some((color) => product.colors.includes(color))
+      const matchesFeature =
+        selectedFeatures.length === 0 ||
+        selectedFeatures.some((feature) => product.features.includes(feature))
+      const matchesTheme =
+        selectedThemes.length === 0 ||
+        selectedThemes.some((theme) => product.themes.includes(theme))
       const matchesMetal =
         metalFilter === 'any' ||
         product.metal === metalFilter ||
         product.metal === 'mixed'
 
-      return matchesType && matchesColor && matchesMetal
+      return (
+        matchesType &&
+        matchesColor &&
+        matchesFeature &&
+        matchesTheme &&
+        matchesMetal
+      )
     }),
-    [metalFilter, selectedColors, selectedProductTypes],
+    [
+      metalFilter,
+      selectedColors,
+      selectedFeatures,
+      selectedProductTypes,
+      selectedThemes,
+    ],
   )
 
   const displayedProducts = visibleProducts.slice(0, visibleProductCount)
@@ -99,10 +125,14 @@ export function CollectionPage() {
   const hasActiveFilters =
     selectedProductTypes.length > 0 ||
     selectedColors.length > 0 ||
+    selectedFeatures.length > 0 ||
+    selectedThemes.length > 0 ||
     metalFilter !== 'any'
   const activeFilterCount =
     selectedProductTypes.length +
     selectedColors.length +
+    selectedFeatures.length +
+    selectedThemes.length +
     (metalFilter === 'any' ? 0 : 1)
 
   function toggleProductType(productType: ProductType) {
@@ -123,10 +153,30 @@ export function CollectionPage() {
     )
   }
 
+  function toggleFeature(feature: ProductFeature) {
+    setVisibleProductCount(productBatchSize)
+    setSelectedFeatures((current) =>
+      current.includes(feature)
+        ? current.filter((item) => item !== feature)
+        : [...current, feature],
+    )
+  }
+
+  function toggleTheme(theme: ProductTheme) {
+    setVisibleProductCount(productBatchSize)
+    setSelectedThemes((current) =>
+      current.includes(theme)
+        ? current.filter((item) => item !== theme)
+        : [...current, theme],
+    )
+  }
+
   function clearFilters() {
     setVisibleProductCount(productBatchSize)
     setSelectedProductTypes([])
     setSelectedColors([])
+    setSelectedFeatures([])
+    setSelectedThemes([])
     setMetalFilter('any')
   }
 
@@ -184,7 +234,7 @@ export function CollectionPage() {
                   <span>
                     <span className="eyebrow">Filter the collection</span>
                     <span className="catalog-filters__description">
-                      Product type, color, and finish
+                      Product type, details, theme, color, and finish
                     </span>
                   </span>
                 </span>
@@ -206,8 +256,8 @@ export function CollectionPage() {
               >
                 <div className="catalog-filters__toolbar">
                   <p>
-                    Select one or more product types, any colors you like, and
-                    a finish.
+                    Combine product types, details, themes, colors, and finish
+                    to find the right piece.
                   </p>
                   <button
                     className="catalog-filters__clear"
@@ -257,7 +307,49 @@ export function CollectionPage() {
                     </div>
                   </fieldset>
 
-                  <fieldset className="catalog-filter-group">
+                  <fieldset className="catalog-filter-group catalog-filter-group--theme">
+                    <legend>Theme</legend>
+                    <div className="catalog-theme-options">
+                      {productThemeOptions.map((option) => {
+                        const selected = selectedThemes.includes(option.value)
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={selected ? 'is-active' : ''}
+                            aria-pressed={selected}
+                            onClick={() => toggleTheme(option.value)}
+                          >
+                            {option.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="catalog-filter-group catalog-filter-group--feature">
+                    <legend>Details</legend>
+                    <div className="catalog-feature-options">
+                      {productFeatureOptions.map((option) => {
+                        const selected = selectedFeatures.includes(option.value)
+
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={selected ? 'is-active' : ''}
+                            aria-pressed={selected}
+                            onClick={() => toggleFeature(option.value)}
+                          >
+                            {option.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="catalog-filter-group catalog-filter-group--color">
                     <legend>Color</legend>
                     <div className="catalog-color-options">
                       {colorOptions.map((color) => {

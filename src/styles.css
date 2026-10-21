@@ -2918,8 +2918,8 @@ blockquote {
 .catalog-filters__groups {
   display: grid;
   padding-block: 1.5rem clamp(1.4rem, 3vw, 2.2rem);
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: clamp(1.8rem, 3.5vw, 3.5rem);
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1.8rem clamp(1.8rem, 3.5vw, 3.5rem);
 }
 
 .catalog-filter-group {
@@ -2938,7 +2938,26 @@ blockquote {
   font-weight: 500;
 }
 
+.catalog-filter-group--type {
+  grid-column: span 4;
+}
+
+.catalog-filter-group--theme {
+  grid-column: span 8;
+}
+
+.catalog-filter-group--feature,
+.catalog-filter-group--metal {
+  grid-column: span 3;
+}
+
+.catalog-filter-group--color {
+  grid-column: span 6;
+}
+
 .catalog-type-options,
+.catalog-theme-options,
+.catalog-feature-options,
 .catalog-color-options,
 .catalog-metal-options {
   display: flex;
@@ -2947,6 +2966,8 @@ blockquote {
 }
 
 .catalog-type-options button,
+.catalog-theme-options button,
+.catalog-feature-options button,
 .catalog-color-options button,
 .catalog-metal-options button {
   display: inline-flex;
@@ -2967,6 +2988,10 @@ blockquote {
 
 .catalog-type-options button:hover,
 .catalog-type-options button.is-active,
+.catalog-theme-options button:hover,
+.catalog-theme-options button.is-active,
+.catalog-feature-options button:hover,
+.catalog-feature-options button.is-active,
 .catalog-color-options button:hover,
 .catalog-metal-options button:hover,
 .catalog-color-options button.is-active,
@@ -3002,6 +3027,14 @@ blockquote {
   .catalog-filters__groups {
     grid-template-columns: 1fr;
     gap: 1.8rem;
+  }
+
+  .catalog-filter-group--type,
+  .catalog-filter-group--theme,
+  .catalog-filter-group--feature,
+  .catalog-filter-group--color,
+  .catalog-filter-group--metal {
+    grid-column: auto;
   }
 }
 
@@ -4447,11 +4480,15 @@ blockquote {
   }
 
   .catalog-color-options,
+  .catalog-theme-options,
+  .catalog-feature-options,
   .catalog-metal-options {
     gap: 0.45rem;
   }
 
   .catalog-type-options button,
+  .catalog-theme-options button,
+  .catalog-feature-options button,
   .catalog-color-options button,
   .catalog-metal-options button {
     min-height: 2.75rem;

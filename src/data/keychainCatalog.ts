@@ -2,8 +2,7 @@ import type { CatalogEntry } from './catalogTypes'
 
 export const keychainCatalog = [
   { source: '20260828_151721', name: 'Bolsa Pérola', colors: ['white', 'beige', 'black'], metal: 'mixed', alternateSources: ['20260828_151737'] },
-  { source: '20260828_151900', name: 'Bolsa Carmim', colors: ['red', 'black', 'white'], metal: 'gold' },
-  { source: '20260828_151913', name: 'Divino Carmim', colors: ['red', 'pink', 'black', 'white'], metal: 'mixed' },
+  { source: '20260828_151900', name: 'Bolsa Carmim', colors: ['red', 'pink', 'black', 'white'], metal: 'mixed', alternateSources: ['20260828_151913'] },
   { source: '20260828_152001', name: 'Dupla Devota', colors: ['blue', 'pink', 'black', 'white'], metal: 'mixed' },
   { source: '20260828_152029', name: 'Mata Dourada', colors: ['green', 'brown', 'beige', 'black', 'white'], metal: 'gold' },
   { source: '20260828_152135', name: 'Mar Solar', colors: ['blue', 'orange', 'black', 'white'], metal: 'gold' },
