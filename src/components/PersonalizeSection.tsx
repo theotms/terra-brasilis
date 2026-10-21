@@ -155,16 +155,13 @@ export function PersonalizeSection({
   }, [referenceColors, referenceFeatures, referenceMetal, referenceSearch, referenceThemes, referenceTypes])
 
   const visibleReferenceProducts = useMemo(() => {
-    const visibleMatches = matchingReferenceProducts.slice(
-      0,
-      visibleReferenceCount,
+    const unselectedMatches = matchingReferenceProducts.filter(
+      (product) => !selectedReferences.includes(product.id),
     )
-    const selectedOutsideView = selectedProducts.filter(
-      (product) => !visibleMatches.some((visible) => visible.id === product.id),
-    )
+    const visibleMatches = unselectedMatches.slice(0, visibleReferenceCount)
 
-    return [...selectedOutsideView, ...visibleMatches]
-  }, [matchingReferenceProducts, selectedProducts, visibleReferenceCount])
+    return [...selectedProducts, ...visibleMatches]
+  }, [matchingReferenceProducts, selectedProducts, selectedReferences, visibleReferenceCount])
 
   const requestMessage = useMemo(() => {
     const inspiration = selectedProducts.length
