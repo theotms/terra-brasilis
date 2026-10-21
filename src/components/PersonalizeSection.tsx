@@ -284,9 +284,9 @@ export function PersonalizeSection({
               Your idea, made <em>by hand.</em>
             </Heading>
             <p>
-              Imagine a name anklet, a wedding palette, a Halloween piece, or
-              something completely your own. Choose what inspires you and tell
-              Helena and Yluska what you have in mind.
+              Imagine a name anklet, a birthday gift, a Halloween piece, or
+              something completely your own. Choose what inspires you and we
+              make it for you.
             </p>
           </div>
 
