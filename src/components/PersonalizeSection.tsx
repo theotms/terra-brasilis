@@ -37,31 +37,11 @@ type RequestDetails = {
 }
 
 const pieceTypes = [
-  {
-    value: 'Anklet',
-    label: 'Anklet',
-    detail: 'A colorful detail made for every step.',
-  },
-  {
-    value: 'Bracelet',
-    label: 'Bracelet',
-    detail: 'One statement piece or a playful stack.',
-  },
-  {
-    value: 'Necklace',
-    label: 'Necklace',
-    detail: 'A centerpiece designed around your story.',
-  },
-  {
-    value: 'Keychain or bag charm',
-    label: 'Charm',
-    detail: 'A personalized keychain or bag charm.',
-  },
-  {
-    value: 'Not sure yet',
-    label: 'Help me choose',
-    detail: 'Share the idea and our makers can guide you.',
-  },
+  { value: 'Bracelet', label: 'Bracelet' },
+  { value: 'Necklace', label: 'Necklace' },
+  { value: 'Bag charm', label: 'Bag charm' },
+  { value: 'Keychain', label: 'Keychain' },
+  { value: 'Not sure yet', label: 'Help me choose' },
 ]
 
 const themeOptions = [
@@ -342,7 +322,6 @@ export function PersonalizeSection({
                   </span>
                   <span className="piece-choice__copy">
                     <strong>{piece.label}</strong>
-                    <small>{piece.detail}</small>
                   </span>
                   <span className="piece-choice__check" aria-hidden="true">
                     <Check />
