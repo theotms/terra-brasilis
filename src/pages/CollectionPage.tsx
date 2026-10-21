@@ -1,5 +1,12 @@
 import { useMemo, useState } from 'react'
-import { ArrowRight, MessageCircle, RotateCcw, Sparkles } from 'lucide-react'
+import {
+  ArrowRight,
+  ChevronDown,
+  MessageCircle,
+  RotateCcw,
+  SlidersHorizontal,
+  Sparkles,
+} from 'lucide-react'
 import { InquiryDialog } from '../components/InquiryDialog'
 import { InteriorPageShell } from '../components/InteriorPageShell'
 import { PhotoFrame } from '../components/PhotoFrame'
@@ -43,24 +50,23 @@ const metalOptions = [
 type MetalFilter = (typeof metalOptions)[number]['value']
 
 const productTypeOptions: {
-  value: 'any' | ProductType
+  value: ProductType
   label: string
 }[] = [
-  { value: 'any', label: 'All pieces' },
   { value: 'necklace', label: 'Necklaces' },
   { value: 'bracelet', label: 'Bracelets' },
   { value: 'keychain', label: 'Keychains' },
 ]
 
-type ProductTypeFilter = (typeof productTypeOptions)[number]['value']
-
 const productBatchSize = 18
 
 export function CollectionPage() {
-  const [productTypeFilter, setProductTypeFilter] =
-    useState<ProductTypeFilter>('any')
+  const [selectedProductTypes, setSelectedProductTypes] = useState<
+    ProductType[]
+  >([])
   const [selectedColors, setSelectedColors] = useState<ProductColor[]>([])
   const [metalFilter, setMetalFilter] = useState<MetalFilter>('any')
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [visibleProductCount, setVisibleProductCount] =
     useState(productBatchSize)
   const [inquiryPiece, setInquiryPiece] = useState<string | null>(null)
@@ -68,7 +74,8 @@ export function CollectionPage() {
   const visibleProducts = useMemo(
     () => products.filter((product) => {
       const matchesType =
-        productTypeFilter === 'any' || product.type === productTypeFilter
+        selectedProductTypes.length === 0 ||
+        selectedProductTypes.includes(product.type)
       const matchesColor =
         selectedColors.length === 0 ||
         selectedColors.some((color) => product.colors.includes(color))
@@ -79,7 +86,7 @@ export function CollectionPage() {
 
       return matchesType && matchesColor && matchesMetal
     }),
-    [metalFilter, productTypeFilter, selectedColors],
+    [metalFilter, selectedColors, selectedProductTypes],
   )
 
   const displayedProducts = visibleProducts.slice(0, visibleProductCount)
@@ -90,9 +97,22 @@ export function CollectionPage() {
   const nextBatchSize = Math.min(productBatchSize, remainingProductCount)
 
   const hasActiveFilters =
-    productTypeFilter !== 'any' ||
+    selectedProductTypes.length > 0 ||
     selectedColors.length > 0 ||
     metalFilter !== 'any'
+  const activeFilterCount =
+    selectedProductTypes.length +
+    selectedColors.length +
+    (metalFilter === 'any' ? 0 : 1)
+
+  function toggleProductType(productType: ProductType) {
+    setVisibleProductCount(productBatchSize)
+    setSelectedProductTypes((current) =>
+      current.includes(productType)
+        ? current.filter((item) => item !== productType)
+        : [...current, productType],
+    )
+  }
 
   function toggleColor(color: ProductColor) {
     setVisibleProductCount(productBatchSize)
@@ -105,7 +125,7 @@ export function CollectionPage() {
 
   function clearFilters() {
     setVisibleProductCount(productBatchSize)
-    setProductTypeFilter('any')
+    setSelectedProductTypes([])
     setSelectedColors([])
     setMetalFilter('any')
   }
@@ -146,91 +166,148 @@ export function CollectionPage() {
             </a>
           </div>
 
-          <div className="catalog-filters page-collection__filters">
+          <div
+            className={`catalog-filters page-collection__filters${
+              filtersOpen ? ' is-open' : ''
+            }`}
+          >
             <div className="catalog-filters__heading">
-              <div>
-                <p className="eyebrow">Filter the collection</p>
-                <p>Choose a product type, any colors you like, and a finish.</p>
-              </div>
               <button
-                className="catalog-filters__clear"
+                className="catalog-filters__toggle"
                 type="button"
-                disabled={!hasActiveFilters}
-                onClick={clearFilters}
+                aria-expanded={filtersOpen}
+                aria-controls="collection-filter-options"
+                onClick={() => setFiltersOpen((current) => !current)}
               >
-                <RotateCcw aria-hidden="true" />
-                Clear filters
+                <span className="catalog-filters__toggle-copy">
+                  <SlidersHorizontal aria-hidden="true" />
+                  <span>
+                    <span className="eyebrow">Filter the collection</span>
+                    <span className="catalog-filters__description">
+                      Product type, color, and finish
+                    </span>
+                  </span>
+                </span>
+                <span className="catalog-filters__toggle-status">
+                  {hasActiveFilters && (
+                    <span className="catalog-filters__active-count">
+                      {activeFilterCount} active
+                    </span>
+                  )}
+                  <ChevronDown aria-hidden="true" />
+                </span>
               </button>
             </div>
 
-            <div className="catalog-filters__groups">
-              <fieldset className="catalog-filter-group catalog-filter-group--type">
-                <legend>Product type</legend>
-                <div className="catalog-type-options">
-                  {productTypeOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      className={productTypeFilter === option.value ? 'is-active' : ''}
-                      aria-pressed={productTypeFilter === option.value}
-                      onClick={() => {
-                        setVisibleProductCount(productBatchSize)
-                        setProductTypeFilter(option.value)
-                      }}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
+            {filtersOpen && (
+              <div
+                className="catalog-filters__content"
+                id="collection-filter-options"
+              >
+                <div className="catalog-filters__toolbar">
+                  <p>
+                    Select one or more product types, any colors you like, and
+                    a finish.
+                  </p>
+                  <button
+                    className="catalog-filters__clear"
+                    type="button"
+                    disabled={!hasActiveFilters}
+                    onClick={clearFilters}
+                  >
+                    <RotateCcw aria-hidden="true" />
+                    Clear filters
+                  </button>
                 </div>
-              </fieldset>
 
-              <fieldset className="catalog-filter-group">
-                <legend>Color</legend>
-                <div className="catalog-color-options">
-                  {colorOptions.map((color) => {
-                    const selected = selectedColors.includes(color.value)
-
-                    return (
+                <div className="catalog-filters__groups">
+                  <fieldset className="catalog-filter-group catalog-filter-group--type">
+                    <legend>Product type</legend>
+                    <div className="catalog-type-options">
                       <button
-                        key={color.value}
                         type="button"
-                        className={selected ? 'is-active' : ''}
-                        aria-pressed={selected}
-                        onClick={() => toggleColor(color.value)}
+                        className={
+                          selectedProductTypes.length === 0 ? 'is-active' : ''
+                        }
+                        aria-pressed={selectedProductTypes.length === 0}
+                        onClick={() => {
+                          setVisibleProductCount(productBatchSize)
+                          setSelectedProductTypes([])
+                        }}
                       >
-                        <span
-                          className="catalog-color-swatch"
-                          style={{ background: color.swatch }}
-                          aria-hidden="true"
-                        />
-                        {color.label}
+                        All pieces
                       </button>
-                    )
-                  })}
-                </div>
-              </fieldset>
+                      {productTypeOptions.map((option) => {
+                        const selected = selectedProductTypes.includes(
+                          option.value,
+                        )
 
-              <fieldset className="catalog-filter-group catalog-filter-group--metal">
-                <legend>Metal finish</legend>
-                <div className="catalog-metal-options">
-                  {metalOptions.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      className={metalFilter === option.value ? 'is-active' : ''}
-                      aria-pressed={metalFilter === option.value}
-                      onClick={() => {
-                        setVisibleProductCount(productBatchSize)
-                        setMetalFilter(option.value)
-                      }}
-                    >
-                      <span aria-hidden="true" />
-                      {option.label}
-                    </button>
-                  ))}
+                        return (
+                          <button
+                            key={option.value}
+                            type="button"
+                            className={selected ? 'is-active' : ''}
+                            aria-pressed={selected}
+                            onClick={() => toggleProductType(option.value)}
+                          >
+                            {option.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="catalog-filter-group">
+                    <legend>Color</legend>
+                    <div className="catalog-color-options">
+                      {colorOptions.map((color) => {
+                        const selected = selectedColors.includes(color.value)
+
+                        return (
+                          <button
+                            key={color.value}
+                            type="button"
+                            className={selected ? 'is-active' : ''}
+                            aria-pressed={selected}
+                            onClick={() => toggleColor(color.value)}
+                          >
+                            <span
+                              className="catalog-color-swatch"
+                              style={{ background: color.swatch }}
+                              aria-hidden="true"
+                            />
+                            {color.label}
+                          </button>
+                        )
+                      })}
+                    </div>
+                  </fieldset>
+
+                  <fieldset className="catalog-filter-group catalog-filter-group--metal">
+                    <legend>Metal finish</legend>
+                    <div className="catalog-metal-options">
+                      {metalOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={
+                            metalFilter === option.value ? 'is-active' : ''
+                          }
+                          aria-pressed={metalFilter === option.value}
+                          onClick={() => {
+                            setVisibleProductCount(productBatchSize)
+                            setMetalFilter(option.value)
+                          }}
+                        >
+                          <span aria-hidden="true" />
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </fieldset>
                 </div>
-              </fieldset>
-            </div>
+              </div>
+            )}
           </div>
 
           <p className="page-collection__result-count" aria-live="polite">
