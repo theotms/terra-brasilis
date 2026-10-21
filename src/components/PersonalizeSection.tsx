@@ -124,6 +124,7 @@ export function PersonalizeSection({
   const [referenceThemes, setReferenceThemes] = useState<ProductTheme[]>([])
   const [referenceColors, setReferenceColors] = useState<ReferenceColor[]>([])
   const [referenceMetal, setReferenceMetal] = useState<'any' | 'gold' | 'silver'>('any')
+  const [referenceFiltersOpen, setReferenceFiltersOpen] = useState(false)
   const [visibleReferenceCount, setVisibleReferenceCount] =
     useState(referencePageSize)
   const [copyStatus, setCopyStatus] = useState<
@@ -132,7 +133,9 @@ export function PersonalizeSection({
 
   const selectedProducts = useMemo(
     () =>
-      products.filter((product) => selectedReferences.includes(product.id)),
+      selectedReferences
+        .map((reference) => products.find((product) => product.id === reference))
+        .filter((product): product is (typeof products)[number] => Boolean(product)),
     [selectedReferences],
   )
 
@@ -155,13 +158,8 @@ export function PersonalizeSection({
   }, [referenceColors, referenceFeatures, referenceMetal, referenceSearch, referenceThemes, referenceTypes])
 
   const visibleReferenceProducts = useMemo(() => {
-    const unselectedMatches = matchingReferenceProducts.filter(
-      (product) => !selectedReferences.includes(product.id),
-    )
-    const visibleMatches = unselectedMatches.slice(0, visibleReferenceCount)
-
-    return [...selectedProducts, ...visibleMatches]
-  }, [matchingReferenceProducts, selectedProducts, selectedReferences, visibleReferenceCount])
+    return matchingReferenceProducts.slice(0, visibleReferenceCount)
+  }, [matchingReferenceProducts, visibleReferenceCount])
 
   const requestMessage = useMemo(() => {
     const inspiration = selectedProducts.length
@@ -202,6 +200,12 @@ export function PersonalizeSection({
   }, [details, selectedProducts])
 
   const maximumSelected = selectedReferences.length >= 3
+  const activeReferenceFilterCount =
+    referenceTypes.length +
+    referenceFeatures.length +
+    referenceThemes.length +
+    referenceColors.length +
+    (referenceMetal === 'any' ? 0 : 1)
   const Heading = headingLevel
   const StepHeading = headingLevel === 'h1' ? 'h2' : 'h3'
 
@@ -242,6 +246,15 @@ export function PersonalizeSection({
         ? current.filter((item) => item !== value)
         : [...current, value],
     )
+  }
+
+  function clearReferenceFilters() {
+    setReferenceTypes([])
+    setReferenceFeatures([])
+    setReferenceThemes([])
+    setReferenceColors([])
+    setReferenceMetal('any')
+    setVisibleReferenceCount(referencePageSize)
   }
 
   function toggleTheme(theme: string) {
@@ -413,24 +426,23 @@ export function PersonalizeSection({
                   />
                 </span>
               </label>
-              <details className="reference-filters">
-                <summary>
+              <div className={`reference-filters${referenceFiltersOpen ? ' is-open' : ''}`}>
+                <button
+                  type="button"
+                  className="reference-filters__toggle"
+                  aria-expanded={referenceFiltersOpen}
+                  onClick={() => setReferenceFiltersOpen((current) => !current)}
+                >
                   Filters
-                  {(referenceTypes.length +
-                    referenceFeatures.length +
-                    referenceThemes.length +
-                    referenceColors.length +
-                    (referenceMetal === 'any' ? 0 : 1)) > 0 && (
-                    <span>
-                      {referenceTypes.length +
-                        referenceFeatures.length +
-                        referenceThemes.length +
-                        referenceColors.length +
-                        (referenceMetal === 'any' ? 0 : 1)}
-                    </span>
+                  {activeReferenceFilterCount > 0 && (
+                    <span>{activeReferenceFilterCount}</span>
                   )}
-                </summary>
-                <div className="reference-filters__body">
+                  <span className="reference-filters__symbol" aria-hidden="true">
+                    {referenceFiltersOpen ? '−' : '+'}
+                  </span>
+                </button>
+                {referenceFiltersOpen && (
+                  <div className="reference-filters__body">
                   <div className="reference-filter-group">
                     <span>Type</span>
                     <div>
@@ -520,24 +532,51 @@ export function PersonalizeSection({
                   <button
                     type="button"
                     className="reference-filters__clear"
-                    onClick={() => {
-                      setReferenceTypes([])
-                      setReferenceFeatures([])
-                      setReferenceThemes([])
-                      setReferenceColors([])
-                      setReferenceMetal('any')
-                      setVisibleReferenceCount(referencePageSize)
-                    }}
+                    onClick={clearReferenceFilters}
+                    disabled={activeReferenceFilterCount === 0}
                   >
                     Clear filters
                   </button>
-                </div>
-              </details>
+                  </div>
+                )}
+              </div>
               <p aria-live="polite">
                 Showing {Math.min(visibleReferenceCount, matchingReferenceProducts.length)} of{' '}
                 {matchingReferenceProducts.length}{' '}
                 {matchingReferenceProducts.length === 1 ? 'model' : 'models'}
               </p>
+            </div>
+
+            <div className="reference-selection-tray" aria-label="Selected inspiration models">
+              {[0, 1, 2].map((index) => {
+                const product = selectedProducts[index]
+
+                return (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`reference-selection-slot${product ? ' is-filled' : ''}`}
+                    onClick={() => product && toggleReference(product.id)}
+                    disabled={!product}
+                    aria-label={
+                      product
+                        ? `Remove ${product.name} from inspiration models`
+                        : `Inspiration model slot ${index + 1} is empty`
+                    }
+                  >
+                    <span className="reference-selection-slot__number">{index + 1}</span>
+                    {product ? (
+                      <>
+                        <img src={product.photo.src} alt="" />
+                        <span className="reference-selection-slot__name">{product.name}</span>
+                        <Heart aria-hidden="true" fill="currentColor" />
+                      </>
+                    ) : (
+                      <span className="reference-selection-slot__empty">Your choice</span>
+                    )}
+                  </button>
+                )
+              })}
             </div>
 
             <div className="reference-grid">
@@ -571,7 +610,7 @@ export function PersonalizeSection({
                     <div className="reference-card__visual">
                       <PhotoFrame photo={product.photo} />
                       <span className="reference-card__number">
-                        {selected ? <Check aria-hidden="true" /> : '+'}
+                        {selected ? <Heart aria-hidden="true" fill="currentColor" /> : '+'}
                       </span>
                     </div>
                     <div className="reference-card__copy">

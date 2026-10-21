@@ -1815,8 +1815,9 @@ blockquote {
   min-width: 8rem;
 }
 
-.reference-filters summary {
+.reference-filters__toggle {
   display: flex;
+  width: 100%;
   min-height: 2.85rem;
   padding: 0.65rem 0.8rem;
   align-items: center;
@@ -1835,7 +1836,7 @@ blockquote {
 .reference-filters summary::-webkit-details-marker { display: none; }
 .reference-filters summary::after { content: '+'; color: var(--gold); font-size: 1rem; }
 .reference-filters[open] summary::after { content: '−'; }
-.reference-filters summary span {
+.reference-filters__toggle > span:not(.reference-filters__symbol) {
   display: grid;
   width: 1.3rem;
   height: 1.3rem;
@@ -1846,6 +1847,17 @@ blockquote {
   background: var(--gold);
   border-radius: 50%;
   font-size: 0.56rem;
+}
+
+.reference-filters__toggle:hover,
+.reference-filters__toggle:focus-visible,
+.reference-filters.is-open .reference-filters__toggle {
+  border-color: var(--gold);
+}
+
+.reference-filters__symbol {
+  color: var(--gold);
+  font-size: 1rem;
 }
 
 .reference-filters__body {
@@ -1902,10 +1914,15 @@ blockquote {
 .reference-filter-finish select {
   min-height: 2rem;
   padding: 0.35rem 0.5rem;
-  color: var(--cream);
-  background: transparent;
-  border: 1px solid var(--line-light);
+  color: var(--forest-deep);
+  background: var(--cream);
+  border: 1px solid var(--gold);
   font-size: 0.62rem;
+}
+
+.reference-filter-finish option {
+  color: var(--forest-deep);
+  background: var(--cream);
 }
 .reference-filters__clear {
   margin-top: 0.55rem;
@@ -1918,9 +1935,102 @@ blockquote {
   text-decoration: underline;
 }
 
+.reference-filters__clear:disabled {
+  cursor: default;
+  opacity: 0.38;
+}
+
 .reference-browser-tools > p {
   margin: 0 0 0.75rem;
   color: rgba(253, 252, 247, 0.58);
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.reference-selection-tray {
+  display: grid;
+  max-width: 32rem;
+  margin: 0 0 1rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.reference-selection-slot {
+  position: relative;
+  display: grid;
+  min-height: 0;
+  padding: 0;
+  aspect-ratio: 1;
+  place-items: center;
+  overflow: hidden;
+  color: rgba(253, 252, 247, 0.48);
+  background: rgba(253, 252, 247, 0.035);
+  border: 1px dashed rgba(253, 252, 247, 0.3);
+}
+
+.reference-selection-slot.is-filled {
+  cursor: pointer;
+  color: var(--cream);
+  border: 2px solid var(--gold);
+}
+
+.reference-selection-slot.is-filled:hover,
+.reference-selection-slot.is-filled:focus-visible {
+  box-shadow: 0 0 0 2px var(--gold);
+}
+
+.reference-selection-slot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reference-selection-slot__number {
+  position: absolute;
+  z-index: 2;
+  top: 0.45rem;
+  left: 0.45rem;
+  display: grid;
+  width: 1.55rem;
+  height: 1.55rem;
+  place-items: center;
+  color: var(--forest-deep);
+  background: var(--gold);
+  border-radius: 50%;
+  font-family: var(--serif);
+  font-weight: 700;
+}
+
+.reference-selection-slot__name {
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  padding: 0.45rem;
+  overflow: hidden;
+  color: var(--cream);
+  background: rgba(8, 35, 20, 0.82);
+  font-family: var(--serif);
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.reference-selection-slot > svg {
+  position: absolute;
+  z-index: 2;
+  top: 0.55rem;
+  right: 0.55rem;
+  width: 1rem;
+  height: 1rem;
+  color: var(--coral);
+}
+
+.reference-selection-slot__empty {
   font-size: 0.58rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -1952,8 +2062,8 @@ blockquote {
 }
 
 .reference-card.is-selected {
-  border-color: var(--gold);
-  box-shadow: inset 0 0 0 2px var(--gold);
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 2px rgba(184, 163, 93, 0.35);
 }
 
 .reference-card.is-disabled {
@@ -1989,8 +2099,8 @@ blockquote {
 
 .reference-card__number {
   position: absolute;
+  top: 0.7rem;
   right: 0.7rem;
-  bottom: 0.7rem;
   display: grid;
   width: 2.15rem;
   height: 2.15rem;
@@ -2004,6 +2114,7 @@ blockquote {
 }
 
 .is-selected .reference-card__number {
+  color: var(--cream);
   background: var(--gold);
 }
 
@@ -2036,6 +2147,10 @@ blockquote {
   font-size: clamp(1.1rem, 1.8vw, 1.45rem);
   font-weight: 500;
   line-height: 1.1;
+}
+
+.reference-card.is-selected .reference-card__copy strong {
+  font-weight: 700;
 }
 
 .reference-card__copy > span {
@@ -4286,6 +4401,16 @@ blockquote {
 
   .reference-search {
     width: 100%;
+  }
+
+  .reference-filters__body {
+    right: auto;
+    left: 0;
+    width: min(34rem, calc(100vw - (2 * var(--page-pad))));
+  }
+
+  .reference-selection-tray {
+    max-width: none;
   }
 
   .reference-browser-tools > p {
