@@ -4,6 +4,7 @@ import {
   Check,
   Copy,
   Heart,
+  Maximize2,
   MessageCircle,
   Search,
   Sparkles,
@@ -117,6 +118,7 @@ export function PersonalizeSection({
   headingLevel = 'h2',
 }: PersonalizeSectionProps) {
   const dialogRef = useRef<HTMLDialogElement>(null)
+  const imageDialogRef = useRef<HTMLDialogElement>(null)
   const [details, setDetails] = useState<RequestDetails>(initialDetails)
   const [referenceSearch, setReferenceSearch] = useState('')
   const [referenceTypes, setReferenceTypes] = useState<ReferenceType[]>([])
@@ -125,6 +127,7 @@ export function PersonalizeSection({
   const [referenceColors, setReferenceColors] = useState<ReferenceColor[]>([])
   const [referenceMetal, setReferenceMetal] = useState<'any' | 'gold' | 'silver'>('any')
   const [referenceFiltersOpen, setReferenceFiltersOpen] = useState(false)
+  const [previewReferenceId, setPreviewReferenceId] = useState<string | null>(null)
   const [visibleReferenceCount, setVisibleReferenceCount] =
     useState(referencePageSize)
   const [copyStatus, setCopyStatus] = useState<
@@ -137,6 +140,9 @@ export function PersonalizeSection({
         .map((reference) => products.find((product) => product.id === reference))
         .filter((product): product is (typeof products)[number] => Boolean(product)),
     [selectedReferences],
+  )
+  const previewProduct = products.find(
+    (product) => product.id === previewReferenceId,
   )
 
   const matchingReferenceProducts = useMemo(() => {
@@ -255,6 +261,16 @@ export function PersonalizeSection({
     setReferenceColors([])
     setReferenceMetal('any')
     setVisibleReferenceCount(referencePageSize)
+  }
+
+  function openImagePreview(productId: string) {
+    setPreviewReferenceId(productId)
+    requestAnimationFrame(() => imageDialogRef.current?.showModal())
+  }
+
+  function closeImagePreview() {
+    imageDialogRef.current?.close()
+    setPreviewReferenceId(null)
   }
 
   function toggleTheme(theme: string) {
@@ -609,6 +625,15 @@ export function PersonalizeSection({
                     </label>
                     <div className="reference-card__visual">
                       <PhotoFrame photo={product.photo} />
+                      <button
+                        type="button"
+                        className="reference-card__zoom"
+                        onClick={() => openImagePreview(product.id)}
+                        aria-label={`View a larger photo of ${product.name}`}
+                        title="View larger"
+                      >
+                        <Maximize2 aria-hidden="true" />
+                      </button>
                       <span className="reference-card__number">
                         {selected ? <Heart aria-hidden="true" fill="currentColor" /> : '+'}
                       </span>
@@ -822,6 +847,33 @@ export function PersonalizeSection({
           </div>
         </form>
       </div>
+
+      <dialog
+        className="reference-image-viewer"
+        ref={imageDialogRef}
+        onClose={() => setPreviewReferenceId(null)}
+        onClick={(event) => {
+          if (event.target === imageDialogRef.current) closeImagePreview()
+        }}
+      >
+        {previewProduct && (
+          <figure>
+            <button
+              type="button"
+              className="reference-image-viewer__close"
+              onClick={closeImagePreview}
+              aria-label="Close enlarged photo"
+            >
+              <X aria-hidden="true" />
+            </button>
+            <img src={previewProduct.photo.src} alt={previewProduct.photo.alt} />
+            <figcaption>
+              <small>{previewProduct.category}</small>
+              <strong>{previewProduct.name}</strong>
+            </figcaption>
+          </figure>
+        )}
+      </dialog>
 
       <dialog
         className="personalize-review"
