@@ -441,8 +441,9 @@ export function PersonalizeSection({
                     {referenceFiltersOpen ? '−' : '+'}
                   </span>
                 </button>
-                {referenceFiltersOpen && (
-                  <div className="reference-filters__body">
+              </div>
+              {referenceFiltersOpen && (
+                <div className="reference-filters__body">
                   <div className="reference-filter-group">
                     <span>Type</span>
                     <div>
@@ -537,9 +538,8 @@ export function PersonalizeSection({
                   >
                     Clear filters
                   </button>
-                  </div>
-                )}
-              </div>
+                </div>
+              )}
               <p aria-live="polite">
                 Showing {Math.min(visibleReferenceCount, matchingReferenceProducts.length)} of{' '}
                 {matchingReferenceProducts.length}{' '}

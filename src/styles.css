@@ -1754,6 +1754,7 @@ blockquote {
   margin-bottom: 1rem;
   padding: 1rem;
   align-items: flex-end;
+  flex-wrap: wrap;
   justify-content: space-between;
   gap: 1.2rem;
   background: rgba(253, 252, 247, 0.045);
@@ -1763,6 +1764,7 @@ blockquote {
 .reference-search {
   display: grid;
   width: min(100%, 26rem);
+  order: 1;
   gap: 0.45rem;
 }
 
@@ -1813,6 +1815,7 @@ blockquote {
 .reference-filters {
   position: relative;
   min-width: 8rem;
+  order: 2;
 }
 
 .reference-filters__toggle {
@@ -1861,12 +1864,12 @@ blockquote {
 }
 
 .reference-filters__body {
-  position: absolute;
-  z-index: 2;
-  top: calc(100% + 0.45rem);
-  right: 0;
-  width: min(34rem, 82vw);
+  position: static;
+  width: 100%;
+  margin-top: 0.2rem;
   padding: 0.85rem;
+  flex: 0 0 100%;
+  order: 4;
   background: var(--forest-deep);
   border: 1px solid var(--line-light);
   box-shadow: 0 1rem 2rem rgba(7, 25, 14, 0.28);
@@ -1942,6 +1945,7 @@ blockquote {
 
 .reference-browser-tools > p {
   margin: 0 0 0.75rem;
+  order: 3;
   color: rgba(253, 252, 247, 0.58);
   font-size: 0.58rem;
   font-weight: 600;
@@ -1952,7 +1956,7 @@ blockquote {
 .reference-selection-tray {
   display: grid;
   max-width: 32rem;
-  margin: 0 0 1rem;
+  margin: 0 auto 1rem;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0.7rem;
 }
@@ -1984,7 +1988,10 @@ blockquote {
 .reference-selection-slot img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  padding: 0.35rem 0.35rem 2rem;
+  object-fit: contain;
+  object-position: center;
+  background: var(--forest-deep);
 }
 
 .reference-selection-slot__number {
@@ -4406,7 +4413,7 @@ blockquote {
   .reference-filters__body {
     right: auto;
     left: 0;
-    width: min(34rem, calc(100vw - (2 * var(--page-pad))));
+    width: 100%;
   }
 
   .reference-selection-tray {
