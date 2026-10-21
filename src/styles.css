@@ -4117,7 +4117,62 @@ blockquote {
 }
 
 .personalize-page .personalize-section {
+  padding-top: clamp(2.2rem, 4vw, 3.8rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5.5rem);
   border-top: 0;
+}
+
+.personalize-page .personalize-intro {
+  margin-bottom: clamp(1.8rem, 3vw, 2.8rem);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.personalize-page .personalize-intro h1 {
+  margin-bottom: 0.9rem;
+  font-size: clamp(3.7rem, 6vw, 6.2rem);
+  line-height: 0.88;
+}
+
+.personalize-page .personalize-intro__copy > .eyebrow {
+  margin-bottom: 0.65rem;
+}
+
+.personalize-page .personalize-intro__copy > p:last-child {
+  font-size: clamp(1.05rem, 1.45vw, 1.3rem);
+  line-height: 1.42;
+}
+
+.personalize-page .personalize-intro__guide {
+  padding: 1rem 1.2rem;
+}
+
+.personalize-page .personalize-intro__guide > .eyebrow {
+  margin-bottom: 0.65rem;
+}
+
+.personalize-page .personalize-intro__guide ol {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 0.9rem;
+}
+
+.personalize-page .personalize-intro__guide li {
+  padding: 0.55rem 0;
+  grid-template-columns: 1.7rem 1fr;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  line-height: 1.2;
+}
+
+.personalize-page .personalize-intro__note {
+  margin-top: 0.65rem;
+  padding-top: 0.65rem;
+  line-height: 1.4;
+}
+
+.personalize-page .personalize-intro__note strong {
+  font-size: 0.95rem;
 }
 
 .reveal {
