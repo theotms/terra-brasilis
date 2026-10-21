@@ -296,10 +296,11 @@ export function PersonalizeSection({
               <li><span>01</span>Choose one or more jewelry types</li>
               <li><span>02</span>Pick up to three inspirations</li>
               <li><span>03</span>Share the details that matter</li>
+              <li><span>04</span>Send your inspiration and begin the conversation</li>
             </ol>
-            <p>
-              This begins a conversation. We&apos;ll confirm the design,
-              materials, price, and timing before anything is ordered.
+            <p className="personalize-intro__note">
+              <strong>No payment before confirmation.</strong>
+              We&apos;ll agree on the design, materials, price, and timing first.
             </p>
           </div>
         </header>
