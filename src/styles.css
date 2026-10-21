@@ -1810,6 +1810,114 @@ blockquote {
   color: rgba(253, 252, 247, 0.42);
 }
 
+.reference-filters {
+  position: relative;
+  min-width: 8rem;
+}
+
+.reference-filters summary {
+  display: flex;
+  min-height: 2.85rem;
+  padding: 0.65rem 0.8rem;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--cream);
+  background: var(--forest-deep);
+  border: 1px solid var(--line-light);
+  cursor: pointer;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  list-style: none;
+  text-transform: uppercase;
+}
+
+.reference-filters summary::-webkit-details-marker { display: none; }
+.reference-filters summary::after { content: '+'; color: var(--gold); font-size: 1rem; }
+.reference-filters[open] summary::after { content: '−'; }
+.reference-filters summary span {
+  display: grid;
+  width: 1.3rem;
+  height: 1.3rem;
+  margin-left: auto;
+  margin-right: 0.45rem;
+  place-items: center;
+  color: var(--forest-deep);
+  background: var(--gold);
+  border-radius: 50%;
+  font-size: 0.56rem;
+}
+
+.reference-filters__body {
+  position: absolute;
+  z-index: 2;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  width: min(34rem, 82vw);
+  padding: 0.85rem;
+  background: var(--forest-deep);
+  border: 1px solid var(--line-light);
+  box-shadow: 0 1rem 2rem rgba(7, 25, 14, 0.28);
+}
+
+.reference-filter-group {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  align-items: start;
+  gap: 0.55rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid var(--line-light);
+}
+.reference-filter-group > span,
+.reference-filter-finish > span {
+  padding-top: 0.35rem;
+  color: var(--gold);
+  font-size: 0.53rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.reference-filter-group > div { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.reference-filter-group button {
+  padding: 0.38rem 0.55rem;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid var(--line-light);
+  cursor: pointer;
+  font-size: 0.6rem;
+}
+.reference-filter-group button:hover,
+.reference-filter-group button.is-active {
+  color: var(--forest-deep);
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.reference-filter-finish {
+  display: grid;
+  padding: 0.55rem 0 0.2rem;
+  grid-template-columns: 4rem 1fr;
+  align-items: center;
+  gap: 0.55rem;
+}
+.reference-filter-finish select {
+  min-height: 2rem;
+  padding: 0.35rem 0.5rem;
+  color: var(--cream);
+  background: transparent;
+  border: 1px solid var(--line-light);
+  font-size: 0.62rem;
+}
+.reference-filters__clear {
+  margin-top: 0.55rem;
+  padding: 0;
+  color: var(--gold-soft);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  font-size: 0.58rem;
+  text-decoration: underline;
+}
+
 .reference-browser-tools > p {
   margin: 0 0 0.75rem;
   color: rgba(253, 252, 247, 0.58);

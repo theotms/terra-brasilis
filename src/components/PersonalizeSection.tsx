@@ -14,6 +14,12 @@ import {
   products,
   siteConfig,
 } from '../data/siteContent'
+import {
+  productFeatureOptions,
+  productThemeOptions,
+  type ProductFeature,
+  type ProductTheme,
+} from '../data/productFacets'
 import { InstagramIcon } from './InstagramIcon'
 import { PhotoFrame } from './PhotoFrame'
 
@@ -68,6 +74,24 @@ const initialDetails: RequestDetails = {
 
 const referencePageSize = 24
 
+const referenceTypeOptions = [
+  { value: 'necklace', label: 'Necklaces' },
+  { value: 'bracelet', label: 'Bracelets' },
+  { value: 'keychain', label: 'Keychains' },
+] as const
+
+const referenceColorOptions = [
+  { value: 'blue', label: 'Blue' },
+  { value: 'green', label: 'Green' },
+  { value: 'pink', label: 'Pink' },
+  { value: 'red', label: 'Red' },
+  { value: 'turquoise', label: 'Turquoise' },
+  { value: 'multicolor', label: 'Multicolor' },
+] as const
+
+type ReferenceType = (typeof referenceTypeOptions)[number]['value']
+type ReferenceColor = (typeof referenceColorOptions)[number]['value']
+
 function normalizeSearch(value: string) {
   return value
     .normalize('NFD')
@@ -95,6 +119,11 @@ export function PersonalizeSection({
   const dialogRef = useRef<HTMLDialogElement>(null)
   const [details, setDetails] = useState<RequestDetails>(initialDetails)
   const [referenceSearch, setReferenceSearch] = useState('')
+  const [referenceTypes, setReferenceTypes] = useState<ReferenceType[]>([])
+  const [referenceFeatures, setReferenceFeatures] = useState<ProductFeature[]>([])
+  const [referenceThemes, setReferenceThemes] = useState<ProductTheme[]>([])
+  const [referenceColors, setReferenceColors] = useState<ReferenceColor[]>([])
+  const [referenceMetal, setReferenceMetal] = useState<'any' | 'gold' | 'silver'>('any')
   const [visibleReferenceCount, setVisibleReferenceCount] =
     useState(referencePageSize)
   const [copyStatus, setCopyStatus] = useState<
@@ -109,12 +138,21 @@ export function PersonalizeSection({
 
   const matchingReferenceProducts = useMemo(() => {
     const query = normalizeSearch(referenceSearch.trim())
-    if (!query) return products
-
     return products.filter((product) =>
-      normalizeSearch(`${product.name} ${product.category}`).includes(query),
+      (!query ||
+        normalizeSearch(`${product.name} ${product.category}`).includes(query)) &&
+        (referenceTypes.length === 0 || referenceTypes.includes(product.type as ReferenceType)) &&
+        (referenceFeatures.length === 0 ||
+          referenceFeatures.some((feature) => product.features.includes(feature))) &&
+        (referenceThemes.length === 0 ||
+          referenceThemes.some((theme) => product.themes.includes(theme))) &&
+        (referenceColors.length === 0 ||
+          referenceColors.some((color) => product.colors.includes(color))) &&
+        (referenceMetal === 'any' ||
+          product.metal === referenceMetal ||
+          product.metal === 'mixed'),
     )
-  }, [referenceSearch])
+  }, [referenceColors, referenceFeatures, referenceMetal, referenceSearch, referenceThemes, referenceTypes])
 
   const visibleReferenceProducts = useMemo(() => {
     const visibleMatches = matchingReferenceProducts.slice(
@@ -194,6 +232,18 @@ export function PersonalizeSection({
       nextReferences.length === 3
         ? 'Three of three models selected. Remove one to make a change.'
         : `${nextReferences.length} of 3 models selected.`,
+    )
+  }
+
+  function toggleReferenceFilter<T extends string>(
+    value: T,
+    setValues: (update: (current: T[]) => T[]) => void,
+  ) {
+    setVisibleReferenceCount(referencePageSize)
+    setValues((current) =>
+      current.includes(value)
+        ? current.filter((item) => item !== value)
+        : [...current, value],
     )
   }
 
@@ -366,6 +416,126 @@ export function PersonalizeSection({
                   />
                 </span>
               </label>
+              <details className="reference-filters">
+                <summary>
+                  Filters
+                  {(referenceTypes.length +
+                    referenceFeatures.length +
+                    referenceThemes.length +
+                    referenceColors.length +
+                    (referenceMetal === 'any' ? 0 : 1)) > 0 && (
+                    <span>
+                      {referenceTypes.length +
+                        referenceFeatures.length +
+                        referenceThemes.length +
+                        referenceColors.length +
+                        (referenceMetal === 'any' ? 0 : 1)}
+                    </span>
+                  )}
+                </summary>
+                <div className="reference-filters__body">
+                  <div className="reference-filter-group">
+                    <span>Type</span>
+                    <div>
+                      {referenceTypeOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={referenceTypes.includes(option.value) ? 'is-active' : ''}
+                          aria-pressed={referenceTypes.includes(option.value)}
+                          onClick={() =>
+                            toggleReferenceFilter(option.value, setReferenceTypes)
+                          }
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="reference-filter-group">
+                    <span>Details</span>
+                    <div>
+                      {productFeatureOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={referenceFeatures.includes(option.value) ? 'is-active' : ''}
+                          aria-pressed={referenceFeatures.includes(option.value)}
+                          onClick={() =>
+                            toggleReferenceFilter(option.value, setReferenceFeatures)
+                          }
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="reference-filter-group">
+                    <span>Theme</span>
+                    <div>
+                      {productThemeOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={referenceThemes.includes(option.value) ? 'is-active' : ''}
+                          aria-pressed={referenceThemes.includes(option.value)}
+                          onClick={() =>
+                            toggleReferenceFilter(option.value, setReferenceThemes)
+                          }
+                        >
+                          {option.label.replace(' collection', '')}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <div className="reference-filter-group">
+                    <span>Color</span>
+                    <div>
+                      {referenceColorOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          className={referenceColors.includes(option.value) ? 'is-active' : ''}
+                          aria-pressed={referenceColors.includes(option.value)}
+                          onClick={() =>
+                            toggleReferenceFilter(option.value, setReferenceColors)
+                          }
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <label className="reference-filter-finish">
+                    <span>Finish</span>
+                    <select
+                      value={referenceMetal}
+                      onChange={(event) => {
+                        setVisibleReferenceCount(referencePageSize)
+                        setReferenceMetal(event.target.value as typeof referenceMetal)
+                      }}
+                    >
+                      <option value="any">Any finish</option>
+                      <option value="gold">Gold</option>
+                      <option value="silver">Silver</option>
+                    </select>
+                  </label>
+                  <button
+                    type="button"
+                    className="reference-filters__clear"
+                    onClick={() => {
+                      setReferenceTypes([])
+                      setReferenceFeatures([])
+                      setReferenceThemes([])
+                      setReferenceColors([])
+                      setReferenceMetal('any')
+                      setVisibleReferenceCount(referencePageSize)
+                    }}
+                  >
+                    Clear filters
+                  </button>
+                </div>
+              </details>
               <p aria-live="polite">
                 Showing {Math.min(visibleReferenceCount, matchingReferenceProducts.length)} of{' '}
                 {matchingReferenceProducts.length}{' '}
